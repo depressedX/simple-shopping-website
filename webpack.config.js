@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const HtmlWebpackConfig = require('html-webpack-plugin');
 
 module.exports = {
+    devtool: 'eval-source-map',
     entry: './src/main.js',
     output: {
         path: __dirname + '/public',

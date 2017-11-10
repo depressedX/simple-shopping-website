@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import router from './router'
-import resources from './module/resources'
+import './mock/mockServer'
 
 new Vue({
     el:'#app',
     template:'<router-view></router-view>',
     router,
 })
-
-console.log(resources)
