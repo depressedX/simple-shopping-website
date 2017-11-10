@@ -10,23 +10,23 @@ const deliverResponse = response => {
 }
 
 const request = {
-    getGoodsList(page = 0,num=12){
-        return axios.get(API.getGoodsList,{page,num})
+    getGoodList(page = 0, rows = 12) {
+        return axios.get('/api/goods', {params: {page, rows}})
             .then(deliverResponse)
     },
-    getGood(id){
+    getGood(id) {
         return axios.get(API.getGood(id))
             .then(deliverResponse)
     },
-    createGood(name, img){
-        formData = new FormData()
-        formData.append('name',name)
-        formData.append('img',img)
-        return axios.post(API.createGood,formData)
+    createGood(name, img) {
+        let formData = new FormData()
+        formData.append('name', name)
+        formData.append('img', img)
+        return axios.post(API.createGood, formData)
             .then(deliverResponse)
     },
-    updateGood(id, bundle){
-        return axios.post(API.updateGood,bundle)
+    updateGood(id, bundle) {
+        return axios.post(API.updateGood, bundle)
             .then(deliverResponse)
     },
 
@@ -37,47 +37,33 @@ const request = {
         })
             .then(deliverResponse)
     },
-    logout(){
+    logout() {
         return axios.post(API.logout)
             .then(deliverResponse)
     },
 
 
-    getCartsNum(){
-        return axios.get(API.getCartsNum)
+    getCartNum() {
+        return axios.get(API.getCartNum)
             .then(deliverResponse)
     },
-    getCarts(){
+    getCarts() {
         return axios.get(API.getCarts)
             .then(deliverResponse)
     },
-    createCart(foodsId, num){
-        return axios.post(API.createCart,{foodsId,num})
+    createCart(foodsId, num) {
+        return axios.post(API.createCart, {foodsId, num})
             .then(deliverResponse)
     },
-    updateCart(id, bundle){
-        return axios.post(API.updateCart(id),bundle)
+    updateCart(id, bundle) {
+        return axios.post(API.updateCart(id), bundle)
             .then(deliverResponse)
     },
-    deleteCarts(idList){
-        return axios.post(API.deleteCarts,{idList})
+    deleteCarts(idList) {
+        return axios.post(API.deleteCarts, {idList})
             .then(deliverResponse)
     }
 }
 
-// const data={}
-// Object.defineProperty(data,'cartItems',{
-//     get(){
-//         let value = []
-//         request.getCarts()
-//             .then(response=>{
-//                 value = response
-//                 console.log(response)
-//             })
-//         return value
-//     }
-// })
-
 
 export default request
-// export {data}
