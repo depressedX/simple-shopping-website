@@ -43,6 +43,10 @@ const request = {
     },
 
 
+    getCartItemsNum(){
+        return axios.get(API.getCartItemsNum)
+            .then(deliverResponse)
+    },
     getCartItems(){
         return axios.get(API.getCartItems)
             .then(deliverResponse)
@@ -61,19 +65,19 @@ const request = {
     }
 }
 
-const data={}
-Object.defineProperty(data,'cartItems',{
-    get(){
-        let value = []
-        request.getCartItems()
-            .then(response=>{
-                value = response
-                console.log(response)
-            })
-        return value
-    }
-})
+// const data={}
+// Object.defineProperty(data,'cartItems',{
+//     get(){
+//         let value = []
+//         request.getCartItems()
+//             .then(response=>{
+//                 value = response
+//                 console.log(response)
+//             })
+//         return value
+//     }
+// })
 
 
 export default request
-export {data}
+// export {data}

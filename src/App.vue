@@ -1,6 +1,8 @@
 <template>
     <div class="app">
-        <header>Shopping</header>
+        <header>
+            <img src=""/>
+        </header>
         <nav>
             <router-link :to="{name:'goods'}">首页</router-link>
         </nav>

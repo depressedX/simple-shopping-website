@@ -8,6 +8,7 @@ export default {
     login:match(API_ADDRESS+'user/login'),
     logout:match(API_ADDRESS+'user/logout'),
 
+    getCartItemsNum:match(API_ADDRESS+'cart/total'),
     getCartItems:match(API_ADDRESS+'cart'),
     createCartItem:match(API_ADDRESS+'cart'),
     updateCartItem:match(API_ADDRESS+'cart/${id}'),
