@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const HtmlWebpackConfig = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
     devtool: 'eval-source-map',
@@ -28,13 +29,26 @@ module.exports = {
                     // vue-loader options
                 }
             },
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name:'[name].[ext]',
+                            outputPath:'assets/'
+                        }
+                    }
+                ]
+            }
         ]
     },
     plugins:[
         new HtmlWebpackConfig({
             template:'./src/index.tmpl.html',
             filename:'index.html'
-        })
+        }),
+        // new CleanWebpackPlugin(['public'])
     ],
     resolve: {
         alias: {

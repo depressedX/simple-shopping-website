@@ -1,18 +1,18 @@
 const API_ADDRESS = "/api/"
 export default {
     getGoodsList:match(API_ADDRESS+'goods'),
-    getGoods:match(API_ADDRESS+'goods/${id}'),
-    createGoods:match(API_ADDRESS+'goods'),
-    updateGoods:match(API_ADDRESS+'goods/${id}'),
+    getGood:match(API_ADDRESS+'good/${id}'),
+    createGood:match(API_ADDRESS+'good/add'),
+    updateGood:match(API_ADDRESS+'good/update/${id}'),
 
     login:match(API_ADDRESS+'user/login'),
     logout:match(API_ADDRESS+'user/logout'),
 
-    getCartItemsNum:match(API_ADDRESS+'cart/total'),
-    getCartItems:match(API_ADDRESS+'cart'),
-    createCartItem:match(API_ADDRESS+'cart'),
-    updateCartItem:match(API_ADDRESS+'cart/${id}'),
-    deleteCartItems:match(API_ADDRESS+'cart/delete'),
+    getCartsNum:match(API_ADDRESS+'cart/total'),
+    getCarts:match(API_ADDRESS+'carts'),
+    createCart:match(API_ADDRESS+'cart/add'),
+    updateCart:match(API_ADDRESS+'cart/update/${id}'),
+    deleteCarts:match(API_ADDRESS+'cart/delete'),
 
     createOrder:match(API_ADDRESS+'order')
 }

@@ -14,19 +14,19 @@ const request = {
         return axios.get(API.getGoodsList,{page,num})
             .then(deliverResponse)
     },
-    getGoods(id){
-        return axios.get(API.getGoods(id))
+    getGood(id){
+        return axios.get(API.getGood(id))
             .then(deliverResponse)
     },
-    createGoods(name,img){
+    createGood(name, img){
         formData = new FormData()
         formData.append('name',name)
         formData.append('img',img)
-        return axios.post(API.createGoods,formData)
+        return axios.post(API.createGood,formData)
             .then(deliverResponse)
     },
-    updateGoods(id,bundle){
-        return axios.post(API.updateGoods,bundle)
+    updateGood(id, bundle){
+        return axios.post(API.updateGood,bundle)
             .then(deliverResponse)
     },
 
@@ -43,24 +43,24 @@ const request = {
     },
 
 
-    getCartItemsNum(){
-        return axios.get(API.getCartItemsNum)
+    getCartsNum(){
+        return axios.get(API.getCartsNum)
             .then(deliverResponse)
     },
-    getCartItems(){
-        return axios.get(API.getCartItems)
+    getCarts(){
+        return axios.get(API.getCarts)
             .then(deliverResponse)
     },
-    createCartItem(foodsId,num){
-        return axios.post(API.createCartItem,{foodsId,num})
+    createCart(foodsId, num){
+        return axios.post(API.createCart,{foodsId,num})
             .then(deliverResponse)
     },
-    updateCartItem(id,bundle){
-        return axios.post(API.updateCartItem(id),bundle)
+    updateCart(id, bundle){
+        return axios.post(API.updateCart(id),bundle)
             .then(deliverResponse)
     },
-    deleteCartItems(idList){
-        return axios.post(API.deleteCartItems,{idList})
+    deleteCarts(idList){
+        return axios.post(API.deleteCarts,{idList})
             .then(deliverResponse)
     }
 }
@@ -69,7 +69,7 @@ const request = {
 // Object.defineProperty(data,'cartItems',{
 //     get(){
 //         let value = []
-//         request.getCartItems()
+//         request.getCarts()
 //             .then(response=>{
 //                 value = response
 //                 console.log(response)
