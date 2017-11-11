@@ -15,7 +15,7 @@ const request = {
             .then(deliverResponse)
     },
     getItemList(page = 0, rows = 12) {
-        return axios.get(API.getItemList, {params: {page, rows}})
+        return axios.get(API.getItemList(), {params: {page, rows}})
             .then(deliverResponse)
     },
     getItem(id) {

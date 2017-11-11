@@ -8,23 +8,23 @@
                 @forward="forwardPage"
                 class="pagination">
         </pagination>
-        <flex-container :items="goodList" :numPerRow="3">
+        <flex-container :items="itemList" :numPerRow="3">
             <good-display
                     slot="item"
                     slot-scope="props"
                     :imgSrc="props.data.imgSrc"
                     :name="props.data.name"
                     :price="props.data.price"
-                    :goodId="props.data.goodId"
+                    :goodId="props.data.itemId"
             ></good-display>
         </flex-container>
     </div>
 </template>
 <script>
     import Pagination from '../../component/Pagination.vue'
-    import resources from '../../module/resources'
     import GoodDisplay from '../../component/GoodDisplay.vue'
     import FlexContainer from '../../component/FlexContainer.vue'
+    import store from '../../store'
 
 
     export default {
@@ -35,31 +35,29 @@
         },
         created(){
             console.log('goods created')
-            resources.getItemList(this.curPage,this.numPerPage).then(response=>{
-                this.goodList = response.goods
-                this.total = response.total
-            })
+//            store请求更新itemList
+            store.dispatch('checkoutItem')
         },
         data(){
             return{
-                total:0,
-                goodList:[],
-                curPage:1,
-                numPerPage:8
             }
+        },
+        computed:{
+            curPage:()=>store.state.item.curPage,
+            total:()=>store.state.item.total,
+            numPerPage:()=>store.state.item.numPerPage,
+            itemList:()=>store.state.item.list,
         },
         methods:{
             nextPage(){
-                resources.getItemList(++this.curPage,this.numPerPage).then(response=>{
-                    this.goodList = response.goods
-                    this.total = response.total
-                })
+                store.dispatch('checkoutItem',this.curPage+1)
+//                resources.getItemList(++this.curPage,this.numPerPage).then(response=>{
+//                    this.goodList = response.goods
+//                    this.total = response.total
+//                })
             },
             forwardPage(){
-                resources.getItemList(--this.curPage,this.numPerPage).then(response=>{
-                    this.goodList = response.goods
-                    this.total = response.total
-                })
+                store.dispatch('checkoutItem',this.curPage-1)
             },
             hello(){
                 console.log('hello')

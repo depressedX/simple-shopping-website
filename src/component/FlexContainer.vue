@@ -23,10 +23,6 @@
             }
         },
         watch: {
-            items(v) {
-                console.log(v)
-
-            }
         },
         computed: {
             emptyNum() {

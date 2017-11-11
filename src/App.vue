@@ -13,7 +13,7 @@
         <section class="cart-info">
             <s-button class="cart-btn">
                 <router-link :to="{name:'cart'}">
-                    <span>我的购物车</span><i class="cart-icon"><span class="cart-num">{{totalCarts}}</span></i>
+                    <span>我的购物车</span><i class="cart-icon"><span class="cart-num">{{cartNum}}</span></i>
                 </router-link>
             </s-button>
         </section>
@@ -42,26 +42,31 @@
     import logo from './img/logo.png'
     import customerImg from './img/customer_service.png'
     import SButton from './component/SButton.vue'
-    import resources from './module/resources'
+    import store from './store'
 
     export default {
         created() {
-            resources.getCartNum().then(num=>{
-                this.totalCarts = num
-            })
+//            resources.getCartNum().then(num=>{
+//                this.totalCarts = num
+//            })
+//            向store请求更新 购物车数量 商品列表
+            store.dispatch('checkoutCart')
+            store.dispatch('checkoutItemNum')
         },
         data() {
             return {
                 logoSrc: logo,
-                customerImg,
-                totalCarts:0
+                customerImg
             }
         },
-        components:{
+        computed: {
+            cartNum: () => store.state.cart.total
+        },
+        components: {
             SButton
         },
-        methods:{
-            hello(){
+        methods: {
+            hello() {
                 console.log('hello')
             }
         }
@@ -114,7 +119,8 @@
         transition-duration: .2s;
         background-color: #f9f9f9;
     }
-    .cart-btn:hover{
+
+    .cart-btn:hover {
         background-color: #eee;
     }
 
@@ -158,9 +164,10 @@
         flex-grow: 4;
     }
 
-    aside{
+    aside {
         padding-right: 4em;
     }
+
     aside .header-wrapper {
         margin-bottom: 1em;
     }

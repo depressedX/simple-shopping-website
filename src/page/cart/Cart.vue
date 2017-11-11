@@ -5,7 +5,7 @@
     </div>
 </template>
 <script>
-    import resources from '../../module/resources'
+    import resources from '../../store/resources'
     export default {
         created() {
             console.log('cart created');

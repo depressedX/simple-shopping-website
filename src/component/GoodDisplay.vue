@@ -4,7 +4,7 @@
         <div class="good-name">{{name}}</div>
         <div class="row-wrapper">
             <div class="good-price">￥{{price}}</div>
-            <s-button @click="addToCart(goodId)" class="add-to-cart">加入购物车</s-button>
+            <s-button @click="addToCart(itemId,1)" class="add-to-cart">加入购物车</s-button>
         </div>
         <div class="good-rates">已有30人评价</div>
     </div>
@@ -12,7 +12,7 @@
 <script>
     import defaultImgSrc from '../img/default_food.jpg'
     import SButton from './SButton.vue'
-    import bus from '../module/bus'
+    import store from '../store'
 
     export default {
         components: {
@@ -31,14 +31,14 @@
                 type: Number,
                 default: 0.00
             },
-            goodId:{
+            itemId:{
                 type:Number,
                 require:true
             }
         },
         methods:{
-            addToCart(cartId){
-                bus.$emit('addtocart',cartId)
+            addToCart(itemId,num){
+                store.dispatch('addToCart',{itemId,num})
             }
         }
     }
