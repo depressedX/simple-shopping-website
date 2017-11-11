@@ -25,9 +25,10 @@
     "webpack-dev-server": "^2.9.1"
   },
   "dependencies": {
+    "axios": "^0.17.0",
+    "mockjs": "^1.0.1-beta3",
     "vue": "^2.5.0",
     "vue-router": "^3.0.0",
-    "axios": "^0.17.0",
-    "mockjs": "^1.0.1-beta3"
+    "vuex": "^3.0.1"
   }
 }

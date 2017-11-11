@@ -10,23 +10,24 @@ const deliverResponse = response => {
 }
 
 const request = {
-    getGoodList(page = 0, rows = 12) {
-        return axios.get('/api/goods', {params: {page, rows}})
+    getItemNum(){
+        return axios.get(API.getItemNum)
             .then(deliverResponse)
     },
-    getGood(id) {
-        return axios.get(API.getGood(id))
+    getItemList(page = 0, rows = 12) {
+        return axios.get(API.getItemList, {params: {page, rows}})
             .then(deliverResponse)
     },
-    createGood(name, img) {
-        let formData = new FormData()
-        formData.append('name', name)
-        formData.append('img', img)
-        return axios.post(API.createGood, formData)
+    getItem(id) {
+        return axios.get(API.getItem(id))
             .then(deliverResponse)
     },
-    updateGood(id, bundle) {
-        return axios.post(API.updateGood, bundle)
+    createItem(bundle) {
+        return axios.post(API.createItem, bundle)
+            .then(deliverResponse)
+    },
+    updateItem(id, bundle) {
+        return axios.post(API.updateItem(id), bundle)
             .then(deliverResponse)
     },
 
@@ -47,12 +48,12 @@ const request = {
         return axios.get(API.getCartNum)
             .then(deliverResponse)
     },
-    getCarts() {
-        return axios.get(API.getCarts)
+    getCartList() {
+        return axios.get(API.getCartList)
             .then(deliverResponse)
     },
-    createCart(foodsId, num) {
-        return axios.post(API.createCart, {foodsId, num})
+    createCart(bundle) {
+        return axios.post(API.createCart, bundle)
             .then(deliverResponse)
     },
     updateCart(id, bundle) {
@@ -61,6 +62,13 @@ const request = {
     },
     deleteCarts(idList) {
         return axios.post(API.deleteCarts, {idList})
+            .then(deliverResponse)
+    },
+
+    uploadImg(img){
+        let formData = new FormData()
+        formData.append(img)
+        return axios.post(API.uploadImg,formData)
             .then(deliverResponse)
     }
 }

@@ -35,7 +35,7 @@
         },
         created(){
             console.log('goods created')
-            resources.getGoodList(this.curPage,this.numPerPage).then(response=>{
+            resources.getItemList(this.curPage,this.numPerPage).then(response=>{
                 this.goodList = response.goods
                 this.total = response.total
             })
@@ -50,13 +50,13 @@
         },
         methods:{
             nextPage(){
-                resources.getGoodList(++this.curPage,this.numPerPage).then(response=>{
+                resources.getItemList(++this.curPage,this.numPerPage).then(response=>{
                     this.goodList = response.goods
                     this.total = response.total
                 })
             },
             forwardPage(){
-                resources.getGoodList(--this.curPage,this.numPerPage).then(response=>{
+                resources.getItemList(--this.curPage,this.numPerPage).then(response=>{
                     this.goodList = response.goods
                     this.total = response.total
                 })

@@ -49,8 +49,6 @@
             resources.getCartNum().then(num=>{
                 this.totalCarts = num
             })
-            this.$nextTick(()=>{
-            })
         },
         data() {
             return {
