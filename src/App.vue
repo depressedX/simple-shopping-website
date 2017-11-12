@@ -76,12 +76,24 @@
     header {
         background-color: rgb(48, 48, 48);
     }
-
-    header, .main-wrapper, nav, .cart-info {
-        width: 940px;
-        /*padding: 0 calc(50% - 470px);*/
-        padding: 0 300px;
+    @media screen {
+        header, .main-wrapper, nav, .cart-info {
+            width: 940px;
+            padding: 0 20px;
+        }
     }
+    @media screen and (min-width: 980px){
+        header, .main-wrapper, nav, .cart-info {
+        width: 940px;
+        padding: 0 calc(50% - 470px);
+        }
+    }
+
+    /*header, .main-wrapper, nav, .cart-info {*/
+        /*width: 940px;*/
+        /*!*padding: 0 calc(50% - 470px);*!*/
+        /*padding: 0 300px;*/
+    /*}*/
 
     nav {
         font-size: 1.2em;

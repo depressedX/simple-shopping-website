@@ -67,7 +67,7 @@ const request = {
 
     uploadImg(img){
         let formData = new FormData()
-        formData.append(img)
+        formData.append('img',img)
         return axios.post(API.uploadImg,formData)
             .then(deliverResponse)
     }

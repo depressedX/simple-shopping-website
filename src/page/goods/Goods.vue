@@ -15,7 +15,7 @@
                     :imgSrc="props.data.imgSrc"
                     :name="props.data.name"
                     :price="props.data.price"
-                    :goodId="props.data.itemId"
+                    :itemId="props.data.itemId"
             ></good-display>
         </flex-container>
     </div>
@@ -50,14 +50,14 @@
         },
         methods:{
             nextPage(){
-                store.dispatch('checkoutItem',this.curPage+1)
+                store.dispatch('nextItemPage')
 //                resources.getItemList(++this.curPage,this.numPerPage).then(response=>{
 //                    this.goodList = response.goods
 //                    this.total = response.total
 //                })
             },
             forwardPage(){
-                store.dispatch('checkoutItem',this.curPage-1)
+                store.dispatch('forwardItemPage')
             },
             hello(){
                 console.log('hello')

@@ -23,11 +23,14 @@ const store = new Vuex.Store({
         modifyItem(state, payload) {
             storeObject(payload, state.item)
         },
+        createitem(state, payload) {
+            state.item.list.push(payload)
+        },
         modifyCart(state, payload) {
             state.cart.list = payload.list || state.cart.list
             state.cart.total = state.cart.list.length
         },
-        modifyItemNum(state,num){
+        modifyItemNum(state, num) {
             state.item.total = num
         }
     },
@@ -40,16 +43,15 @@ const store = new Vuex.Store({
                 })
         },
         // 服务器获取分页的商品
-        checkoutItem({commit, state}, payload={}) {
+        checkoutItem({commit, state}, payload = {}) {
             let curPage = payload.curPage || state.item.curPage,
                 numPerPage = payload.numPerPage || state.item.numPerPage,
                 total = state.item.total
-
-            if (curPage<=0 || curPage >  Math.max(1,Math.ceil(total/numPerPage))){
+            if (curPage <= 0 || curPage > Math.max(1, Math.ceil(total / numPerPage))) {
                 // 越界
                 return
             }
-            resources.getItemList(state.item.curPage, state.item.numPerPage)
+            resources.getItemList(curPage, numPerPage)
                 .then(response => {
                     commit('modifyItem', {
                         curPage,
@@ -58,23 +60,54 @@ const store = new Vuex.Store({
                     })
                 })
         },
-        checkoutItemNum({commit}){
+        checkoutItemNum({commit}) {
             resources.getItemNum()
                 .then(
-                    response=>{
-                        commit('modifyItemNum',response)
+                    response => {
+                        commit('modifyItemNum', response)
                     }
                 )
         },
         // 添加购物车
-        addToCart({dispatch},payload={}){
-            if (!payload.itemId||!payload.num) return;
+        addToCart({dispatch}, payload = {}) {
+            if (!payload.itemId || !payload.num) return;
             resources.createCart(payload)
                 .then(
-                    ()=>{
+                    () => {
                         dispatch('checkoutCart')
 
                     }
+                )
+        },
+
+        // 下一页商品
+        nextItemPage({dispatch, state}) {
+            dispatch('checkoutItem', {curPage: state.item.curPage + 1})
+        },
+        // 上一页商品
+        forwardItemPage({dispatch, state}) {
+            dispatch('checkoutItem', {curPage: state.item.curPage - 1})
+        },
+        createItem({dispatch, commit}, {img, name, price}) {
+            dispatch('_uploadImg', img)
+                .then(
+                    (imgSrc) => resources.createItem({imgSrc, name, price})
+                )
+                .then(
+                    itemId => {
+                        return resources.getItem(itemId)
+                    }
+                )
+                .then(
+                    item => {
+                        commit('createItem', item)
+                    }
+                )
+        },
+        _uploadImg(context, img) {
+            return resources.uploadImg(img)
+                .then(
+                    (response) => response.imgSrc
                 )
         }
     }
@@ -82,6 +115,7 @@ const store = new Vuex.Store({
 })
 
 export default store
+export let state = store.state
 
 function storeObject(data, target) {
     Object.keys(data).forEach((value) => {

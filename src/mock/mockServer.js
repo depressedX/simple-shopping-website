@@ -14,15 +14,15 @@ Random.extend({
     }
 })
 
-const goodList = Mock.mock({
-    'goods|20-50': [
+const itemList = Mock.mock({
+    'items|20-50': [
         {
             'itemId|+1': 0,
             name: '@itemname@integer(1,50)',
             'price|20-200.2-2': 0.00
         }
     ]
-}).goods
+}).items
 
 function getUrlParam(url, param) {
     var r = new RegExp("\\?(?:.+&)?" + param + "=(.*?)(?:&.*)?$");
@@ -34,7 +34,8 @@ function getUrlParam(url, param) {
 Mock.mock(/\/api\/items[^/]*$/, 'get', (options) => {
     let page = parseInt(getUrlParam(options.url, 'page'))
     let rows = parseInt(getUrlParam(options.url, 'rows'))
-    let goods = goodList.slice((page - 1) * rows, Math.min((page - 1) * rows + rows, goodList.length))
+    console.log(`pagination from ${(page - 1) * rows} to ${Math.min((page - 1) * rows + rows, itemList.length)}`)
+    let goods = itemList.slice((page - 1) * rows, Math.min((page - 1) * rows + rows, itemList.length))
     return {
         status: 200,
         message: 'OK',
@@ -43,12 +44,16 @@ Mock.mock(/\/api\/items[^/]*$/, 'get', (options) => {
 })
 
 
-Mock.mock(/\/api\/item\/add$/, 'post', SUCCESS_RESPONSE)
-Mock.mock(/\/api\/item\/update\/\d+$/, 'post', SUCCESS_RESPONSE)
+Mock.mock(/\/api\/item\/add$/, 'post', (options)=>{
+    return SUCCESS_RESPONSE
+})
+Mock.mock(/\/api\/item\/update\/\d+$/, 'post', (options)=>{
+
+})
 Mock.mock(/\/api\/item\/total$/, 'get', {
     status:200,
     message:'OK',
-    'data|10-20':0
+    data:itemList.length
 })
 
 Mock.mock(/\/api\/user\/login$/, 'post', SUCCESS_RESPONSE)
@@ -63,9 +68,9 @@ Mock.mock(/\/api\/cart\/total$/, 'get', {
 Mock.mock(/\/api\/carts$/, 'get',  {
         status: 200,
         message: 'OK',
-        'data|2-5': [{
+        'data|4-8': [{
             'cartId|+1': 0,
-            'foodId|0-255': 0,
+            'itemId|0-255': 0,
             'name': '@Name',
             'num|1-3': 0,
             'price|20-200.2-2': 0.00

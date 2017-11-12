@@ -36,8 +36,7 @@
         },
         computed: {
             totalPage() {
-                if (this.total===0) return 1
-                return Math.ceil(this.total / this.numPerPage)
+                return Math.max(Math.ceil(this.total / this.numPerPage),1)
             },
             reachLeftBound(){
                 return this.curPage===1
