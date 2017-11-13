@@ -8,6 +8,7 @@
                 <li class="nav-item">
                     <router-link :to="{name:'item'}">首页</router-link>
                     <router-link :to="{name:'itemAdmin'}">管理</router-link>
+                    <a href="javascript:void (0)" @click="$refs.loginModal.open()">登录</a>
                 </li>
             </ul>
         </nav>
@@ -37,6 +38,7 @@
             </aside>
             <router-view @click="hello" class="main-content"></router-view>
         </section>
+        <login ref="loginModal"></login>
     </div>
 </template>
 <script>
@@ -44,6 +46,7 @@
     import customerImg from './img/customer_service.png'
     import SButton from './component/SButton.vue'
     import store from './store'
+    import Login from './component/LoginWithModal.vue'
 
     export default {
         created() {
@@ -65,7 +68,8 @@
             cartNum: () => store.state.cart.total
         },
         components: {
-            SButton
+            SButton,
+            Login
         },
         methods: {
             hello() {
@@ -91,11 +95,6 @@
         }
     }
 
-    /*header, .main-wrapper, nav, .cart-info {*/
-        /*width: 940px;*/
-        /*!*padding: 0 calc(50% - 470px);*!*/
-        /*padding: 0 300px;*/
-    /*}*/
 
     nav {
         font-size: 1.2em;
@@ -216,4 +215,6 @@
         background-image: url("./img/customer_service.png");
         background-size: contain;
     }
+
+
 </style>

@@ -38,6 +38,14 @@
     .item:hover {
         background-color: #eee;
         cursor: pointer;
-
+    }
+    .create-item-btn{
+        display: inline-block;
+        padding: .5em 1em;
+        border: 1px solid hsl(200,50%,50%);
+        border-radius: 5px;
+    }
+    .create-item-btn:hover{
+        background-color: #eee;
     }
 </style>
