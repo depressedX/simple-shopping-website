@@ -6,11 +6,12 @@
         <nav>
             <ul class="nav-bar">
                 <li class="nav-item">
-                    <router-link :to="{name:'goods'}">首页</router-link>
+                    <router-link :to="{name:'item'}">首页</router-link>
+                    <router-link :to="{name:'itemAdmin'}">管理</router-link>
                 </li>
             </ul>
         </nav>
-        <section class="cart-info">
+        <section class="cart-info" v-if="$route.name!=='itemAdmin'&&$route.name!=='detailItemAdmin'">
             <s-button class="cart-btn">
                 <router-link :to="{name:'cart'}">
                     <span>我的购物车</span><i class="cart-icon"><span class="cart-num">{{cartNum}}</span></i>
@@ -18,7 +19,7 @@
             </s-button>
         </section>
         <section class="main-wrapper">
-            <aside>
+            <aside v-if="$route.name!=='itemAdmin'&&$route.name!=='detailItemAdmin'">
                 <div class="header-wrapper">
                     <img :src="customerImg">
                     <h1 class="cn">客服中心</h1>
@@ -52,6 +53,7 @@
 //            向store请求更新 购物车数量 商品列表
             store.dispatch('checkoutCart')
             store.dispatch('checkoutItemNum')
+            store.dispatch('checkoutItem')
         },
         data() {
             return {

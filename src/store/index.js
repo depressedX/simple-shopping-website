@@ -109,6 +109,9 @@ const store = new Vuex.Store({
                 .then(
                     (response) => response.imgSrc
                 )
+        },
+        getSingleItem(context,itemId){
+            return resources.getItem(itemId)
         }
     }
 

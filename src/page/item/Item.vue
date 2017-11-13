@@ -34,9 +34,9 @@
             FlexContainer
         },
         created(){
-            console.log('goods created')
+            console.log('item created')
 //            store请求更新itemList
-            store.dispatch('checkoutItem')
+//            store.dispatch('checkoutItem')
         },
         data(){
             return{
@@ -52,7 +52,7 @@
             nextPage(){
                 store.dispatch('nextItemPage')
 //                resources.getItemList(++this.curPage,this.numPerPage).then(response=>{
-//                    this.goodList = response.goods
+//                    this.goodList = response.item
 //                    this.total = response.total
 //                })
             },

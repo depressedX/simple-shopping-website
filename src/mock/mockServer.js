@@ -55,6 +55,21 @@ Mock.mock(/\/api\/item\/total$/, 'get', {
     message:'OK',
     data:itemList.length
 })
+Mock.mock(/\/api\/item\/\d+$/,'get',(options)=>{
+    let itemId = Number(options.url.toString().match(/\d+$/)[0])
+    for(let key in itemList){
+        if (itemList[key].itemId === itemId){
+            return {
+                status:200,
+                message:'OK',
+                data:itemList[key]
+            }
+        }
+    }
+    return{
+        status:400
+    }
+})
 
 Mock.mock(/\/api\/user\/login$/, 'post', SUCCESS_RESPONSE)
 Mock.mock(/\/api\/user\/logout$/, 'post', SUCCESS_RESPONSE)

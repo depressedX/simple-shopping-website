@@ -1,4 +1,4 @@
-const API_ADDRESS = "/api/"
+const API_ADDRESS = API_ROOT_PATH+"/api/"
 export default {
     getItemNum:match(API_ADDRESS+'item/total'),
     getItemList:match(API_ADDRESS+'items'),
