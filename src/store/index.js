@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import resources from './resources'
-import ClientError from './ClientError'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
+        isLogin:false,
+
         // 存放某页的商品
         item: {
             total: 0,
@@ -18,6 +19,12 @@ const store = new Vuex.Store({
         cart: {
             total: 0,
             list: []
+        },
+
+
+        globalNoticeModal:{
+            message:'',
+            show:false
         }
     },
     mutations: {
@@ -33,6 +40,13 @@ const store = new Vuex.Store({
         },
         modifyItemNum(state, num) {
             state.item.total = num
+        },
+        createNoticeModal(state,message){
+            state.globalNoticeModal.message = message
+            state.globalNoticeModal.show = true
+        },
+        disposeNoticeModal(state){
+            state.globalNoticeModal.show = false
         }
     },
     actions: {
@@ -117,6 +131,20 @@ const store = new Vuex.Store({
         },
         getSingleItem(context,itemId){
             return resources.getItem(itemId)
+        },
+
+        // 登录
+        login({state},payload={}){
+            let {username} = payload
+            return resources.login(username)
+                .then(
+                    ()=>{
+                        state.isLogin = true
+                    },
+                    (e)=>{
+                        throw e
+                    }
+                )
         }
     }
 

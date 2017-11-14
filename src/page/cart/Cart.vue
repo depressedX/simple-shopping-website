@@ -14,10 +14,17 @@
             </tr>
             </thead>
             <tbody class="cart-table__body">
-            <cart-tr v-for="cart in cartList" :cartInfo="cart" :key="cart.cartId" class="cart-table__row"></cart-tr>
+            <cart-tr
+                    v-for="cart in cartList"
+                    :cartInfo="cart"
+                    :key="cart.cartId"
+                    v-model="cart.selected"
+                    class="cart-table__row">
+            </cart-tr>
             </tbody>
         </table>
-        <cart-control-bar></cart-control-bar>
+        <cart-control-bar
+                v-model="selectAll"></cart-control-bar>
     </div>
 </template>
 <script>
@@ -41,34 +48,69 @@
             }
         },
         computed: {
-            cartList: () => state.cart.list
+            cartList: () => state.cart.list.map(obj => assign(obj, {selected: false}))
+        },
+        watch: {
+            selectAll(flag) {
+                this.cartList.map(cart => {
+                    cart.selected = flag
+                })
+            },
+            cartList(value){
+                /*******************************
+                 *
+                 */
+                let result1 = value.reduce((pre,cur)=>pre && cur,true)
+                let result2 = value.reduce((pre,cur)=>pre && !cur,false)
+                if (result1){
+                    this.selectAll = true
+                }
+                if (result2){
+
+                }
+            }
         }
+
+    }
+
+    function assign() {
+        let res = {}
+        Object.assign.apply(null, arguments)
+        return res
     }
 </script>
 <style scoped>
-    .cart-table{
+    .cart-table {
         width: 100%;
         box-sizing: border-box;
     }
-    .cart-table__head{
+
+    .cart-table__head {
         font-size: 1.63rem;
         border-bottom: 1px solid #ed1c24;
         line-height: 2;
         text-align: center;
     }
-    .cart-table__body{
+
+    .cart-table__body {
         font-size: 1.18rem;
     }
-    table{border-collapse: collapse;}
-    .cart-table__row{
+
+    table {
+        border-collapse: collapse;
+    }
+
+    .cart-table__row {
         border-color: white;
         border-width: 1em 0;
         border-style: solid;
     }
-    .cart-table__row:nth-child(odd){
+
+    .cart-table__row:nth-child(odd) {
         background-color: #e5e5e5;
     }
-    .cart-table__row:nth-child(even){
+
+    .cart-table__row:nth-child(even) {
         background-color: #fab9b7;
     }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="mask" @click="show=false" v-if="show">
+    <div class="mask" @click="$emit('clickmodal')">
         <div class="container" @click.stop="">
             <div class="title-wrapper"><slot name="title"></slot></div>
             <slot></slot>
@@ -10,20 +10,9 @@
     export default {
         data(){
             return{
-                show:true
             }
         },
         methods:{
-            toggle(){
-                this.show = !this.show
-            },
-            open(){
-                this.show = true
-            },
-            close(){
-                this.show = false
-            },
-
         }
     }
 </script>

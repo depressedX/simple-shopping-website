@@ -1,25 +1,29 @@
 <template>
     <div class="cart-control-bar">
         <div class="select-all-wrapper">
-            <checkbox v-model="selectAll"></checkbox>
-            <a href="javascript:void (0)" @click="selectAll=!selectAll">全选</a>
+            <checkbox v-model="selectAll" @input="$emit('changeselectstyle',selectAll)"></checkbox>
+            <a href="javascript:void (0)" @click="$emit('changeselectstyle')">全选</a>
         </div>
-        <a href="javascript:void (0)" @click="foo" class="delete-selection">删除所选</a>
+        <a href="javascript:void (0)" @click="" class="delete-selection">删除所选</a>
         <span>共选商品<span style="color:#ed1c24">{{cartNum}}</span>件</span>
         <span style="padding: 0 1em">合计￥<span style="color: #ed1c24">{{totalPrice}}</span></span>
-        <a href="javascript:void (0)" class="purchase-btn" @click="foo">结算</a>
+        <a href="javascript:void (0)" class="purchase-btn" @click="">结算</a>
     </div>
 </template>
 <script>
     import Checkbox from './Checkbox.vue'
 
     export default {
+//        model: {
+//            prop: 'value',
+//            event: 'changeselectstyle'
+//        },
         components: {
             Checkbox
         },
         data() {
             return {
-                selectAll: false
+                selectAll:false
             }
         },
         props: {
@@ -30,7 +34,13 @@
             totalPrice: {
                 type: Number,
                 default: 0
+            },
+            value:{
+                type:Boolean,
+                default:false
             }
+        },
+        watch: {
         }
     }
 </script>
@@ -46,9 +56,11 @@
         background-image: linear-gradient(to bottom, #fff, #ededed);
         padding: .5em 2em;
     }
-    .select-all-wrapper{
+
+    .select-all-wrapper {
         padding: 0 1em;
     }
+
     .purchase-btn {
         background-color: #ed1c24;
         color: white;

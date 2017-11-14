@@ -1,41 +1,59 @@
 <template>
-        <modal ref="modal">
-            <h1 slot="title" class="login-modal__title">登录网站</h1>
-            <div class="login-modal__content">
+    <modal ref="modal" @clickmodal="$emit('requestclose')">
+        <h1 slot="title" class="login-modal__title">登录网站</h1>
+        <div class="login-modal__content">
+            <form id="form" @submit.prevent>
                 <div class="row">
-                    <label for="username">用户名:</label><input style="line-height: 2" name="username" placeholder="输入用户名"
-                                                             id="username"/>
+                    <label for="username">用户名:</label>
+                    <input required v-model="username" style="line-height: 2" name="username" placeholder="输入用户名" id="username"/>
+
                 </div>
                 <div class="style-wrapper row" style="text-align: right;">
-                    <button class="login-btn">登录</button>
+                    <s-button ref="submit" type="submit" class="login-btn" @click="submit">登录</s-button>
                 </div>
-            </div>
-        </modal>
+            </form>
+        </div>
+    </modal>
 </template>
 <script>
     import Modal from './modal/Modal.vue'
+    import store from '../store'
+    import SButton from './SButton.vue'
 
     export default {
         components: {
-            Modal
+            Modal,
+            SButton
         },
         data() {
             return {
-                show: true
+                username: '',
+                form: null
             }
         },
         created() {
             console.log('login modal created')
+            this.$nextTick(() => {
+                this.form = document.getElementById('form')
+            })
         },
         methods: {
-            close() {
-                this.$refs.modal.close()
-            },
-            open() {
-                this.$refs.modal.open()
-            },
-            toggle() {
-                this.$refs.modal.toggle()
+            submit() {
+                this.form.reportValidity();
+                if (this.form.checkValidity()) {
+                    this.$refs.submit.preventClickEvent()
+                    store.dispatch('login', {username: this.username})
+                        .then(
+                            ()=>{
+                                this.$emit('requestclose')
+                            },
+                            e=>{
+                                this.$refs.submit.allowClickEvent()
+                                this.$emit('requestclose')
+                                store.commit('createNoticeModal',e.message)
+                            }
+                        )
+                }
             }
         },
     }

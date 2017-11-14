@@ -1,5 +1,5 @@
 <template>
-    <div class="app">
+    <div class="app" @clickmodal="test">
         <header>
             <img :src="logoSrc">
         </header>
@@ -8,7 +8,7 @@
                 <li class="nav-item">
                     <router-link :to="{name:'item'}">首页</router-link>
                     <router-link :to="{name:'itemAdmin'}">管理</router-link>
-                    <a href="javascript:void (0)" @click="test">登录</a>
+                    <a href="javascript:void (0)" @click="showLoginModal=!showLoginModal">登录</a>
                 </li>
             </ul>
         </nav>
@@ -22,9 +22,9 @@
         <section class="main-wrapper">
             <aside v-if="$route.name!=='itemAdmin'&&$route.name!=='detailItemAdmin'">
                 <!--<div class="header-wrapper">-->
-                    <!--<img :src="customerImg">-->
-                    <!--<h1 class="cn">客服中心</h1>-->
-                    <!--<h1 class="en">CUSTOMER SERVICE</h1>-->
+                <!--<img :src="customerImg">-->
+                <!--<h1 class="cn">客服中心</h1>-->
+                <!--<h1 class="en">CUSTOMER SERVICE</h1>-->
                 <!--</div>-->
                 <!--<hr/>-->
                 <!--<h2>售前导购</h2>-->
@@ -38,15 +38,17 @@
             </aside>
             <router-view class="main-content"></router-view>
         </section>
-        <login ref="loginModal"></login>
+        <login v-if="showLoginModal" @requestclose="showLoginModal=false"></login>
+        <notice-modal v-if="showNoticeModal" :message="noticeModalMessage"></notice-modal>
     </div>
 </template>
 <script>
     import logo from './img/logo.png'
     import customerImg from './img/customer_service.png'
     import SButton from './component/SButton.vue'
-    import store from './store'
+    import {state, default as store} from './store'
     import Login from './component/LoginWithModal.vue'
+    import NoticeModal from './component/modal/NoticeModal.vue'
 
     export default {
         created() {
@@ -61,20 +63,28 @@
         data() {
             return {
                 logoSrc: logo,
-                customerImg
+                customerImg,
+                showLoginModal: false,
+
+//                通知modal
+                read: true
             }
         },
         computed: {
-            cartNum: () => store.state.cart.total
+            cartNum: () => store.state.cart.total,
+            showNoticeModal: () => state.globalNoticeModal.show,
+            noticeModalMessage: () => state.globalNoticeModal.message
         },
+        watch: {},
         components: {
             SButton,
-            Login
+            Login,
+            NoticeModal
         },
         methods: {
-            test(){
-                console.log('xx')
-                this.$refs.loginModal.open()
+            test() {
+                console.log('test')
+                console.log('click')
             }
         }
     }
@@ -83,19 +93,20 @@
     header {
         background-color: rgb(48, 48, 48);
     }
+
     @media screen {
         header, .main-wrapper, nav, .cart-info {
             width: 940px;
             padding: 0 20px;
         }
     }
-    @media screen and (min-width: 980px){
+
+    @media screen and (min-width: 980px) {
         header, .main-wrapper, nav, .cart-info {
-        width: 940px;
-        padding: 0 calc(50% - 470px);
+            width: 940px;
+            padding: 0 calc(50% - 470px);
         }
     }
-
 
     nav {
         font-size: 1.2em;

@@ -3,11 +3,12 @@
 </template>
 <script>
     export default {
-        props:{
-            clickable:{
-                default:true,
-                type:Boolean
+        data(){
+            return {
+                clickable: true
             }
+        },
+        props:{
         },
         methods:{
             _handleClickEvent(){

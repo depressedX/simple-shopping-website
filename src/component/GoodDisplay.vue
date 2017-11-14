@@ -43,7 +43,6 @@
         },
         methods:{
             addToCart(itemId,num){
-
                 this.$refs['add-btn'].preventClickEvent()
                 store.dispatch('addToCart',{itemId,num})
                     .then(
@@ -51,9 +50,10 @@
                             this.$refs['add-btn'].allowClickEvent()
                         },
                         e=>{
+                            this.$refs['add-btn'].allowClickEvent()
                             if (e.status == statusCode.CART_FULLFILLED){
 //                                购物车已满
-                                this.$refs['add-btn'].allowClickEvent()
+                                store.commit('createNoticeModal',e.message)
                             }
                         }
                     )

@@ -1,6 +1,6 @@
 <template>
     <tr style="text-align: center">
-        <td><checkbox></checkbox></td>
+        <td><checkbox @input="$emit('input',value)" v-model="value"></checkbox></td>
         <td style="text-align: left">
             <img :src="cartInfo.imgSrc||defaultImg" class="cart-img"/>
             <span>{{cartInfo.name}}</span>
@@ -23,7 +23,8 @@
         },
         data(){
             return {
-                defaultImg
+                defaultImg,
+                selected:false
             }
 
         },
@@ -31,7 +32,8 @@
             cartInfo:{
                 type:Object,
                 required:true
-            }
+            },
+            value:Boolean
         }
     }
 </script>
