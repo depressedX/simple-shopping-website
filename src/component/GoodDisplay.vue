@@ -6,7 +6,7 @@
             <div class="good-price">￥{{price}}</div>
             <s-button @click="addToCart(itemId,1)" class="add-to-cart">加入购物车</s-button>
         </div>
-        <div class="good-rates">已有30人评价</div>
+        <!--<div class="good-rates">已有30人评价</div>-->
     </div>
 </template>
 <script>

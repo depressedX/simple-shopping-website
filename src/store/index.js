@@ -75,7 +75,6 @@ const store = new Vuex.Store({
                 .then(
                     () => {
                         dispatch('checkoutCart')
-
                     }
                 )
         },

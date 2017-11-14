@@ -8,7 +8,7 @@
                 <li class="nav-item">
                     <router-link :to="{name:'item'}">首页</router-link>
                     <router-link :to="{name:'itemAdmin'}">管理</router-link>
-                    <a href="javascript:void (0)" @click="$refs.loginModal.open()">登录</a>
+                    <a href="javascript:void (0)" @click="test">登录</a>
                 </li>
             </ul>
         </nav>
@@ -21,22 +21,22 @@
         </section>
         <section class="main-wrapper">
             <aside v-if="$route.name!=='itemAdmin'&&$route.name!=='detailItemAdmin'">
-                <div class="header-wrapper">
-                    <img :src="customerImg">
-                    <h1 class="cn">客服中心</h1>
-                    <h1 class="en">CUSTOMER SERVICE</h1>
-                </div>
-                <hr/>
-                <h2>售前导购</h2>
-                <p class="customer-server">小新</p>
-                <hr/>
-                <h2>售后导购</h2>
-                <p class="customer-server">小新</p>
-                <hr/>
-                <h2>工作时间</h2>
-                <p>周一至周六:AM 08:30-PM 00:00</p>
+                <!--<div class="header-wrapper">-->
+                    <!--<img :src="customerImg">-->
+                    <!--<h1 class="cn">客服中心</h1>-->
+                    <!--<h1 class="en">CUSTOMER SERVICE</h1>-->
+                <!--</div>-->
+                <!--<hr/>-->
+                <!--<h2>售前导购</h2>-->
+                <!--<p class="customer-server">小新</p>-->
+                <!--<hr/>-->
+                <!--<h2>售后导购</h2>-->
+                <!--<p class="customer-server">小新</p>-->
+                <!--<hr/>-->
+                <!--<h2>工作时间</h2>-->
+                <!--<p>周一至周六:AM 08:30-PM 00:00</p>-->
             </aside>
-            <router-view @click="hello" class="main-content"></router-view>
+            <router-view class="main-content"></router-view>
         </section>
         <login ref="loginModal"></login>
     </div>
@@ -72,8 +72,9 @@
             Login
         },
         methods: {
-            hello() {
-                console.log('hello')
+            test(){
+                console.log('xx')
+                this.$refs.loginModal.open()
             }
         }
     }

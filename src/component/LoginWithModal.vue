@@ -1,41 +1,43 @@
 <template>
-    <modal v-show="show">
-        <h1 slot="title" class="login-modal__title">登录网站</h1>
-        <div class="login-modal__content">
-            <div class="row">
-                <label for="username">用户名:</label><input style="line-height: 2" name="username" placeholder="输入用户名" id="username"/>
+        <modal ref="modal">
+            <h1 slot="title" class="login-modal__title">登录网站</h1>
+            <div class="login-modal__content">
+                <div class="row">
+                    <label for="username">用户名:</label><input style="line-height: 2" name="username" placeholder="输入用户名"
+                                                             id="username"/>
+                </div>
+                <div class="style-wrapper row" style="text-align: right;">
+                    <a href="javascript:void (0)" @click="" class="login-btn">登录</a>
+                </div>
             </div>
-            <div class="style-wrapper row" style="text-align: right;" >
-                <a href="javascript:void (0)" @click="" class="login-btn">登录</a>
-            </div>
-        </div>
-    </modal>
+        </modal>
 </template>
 <script>
     import Modal from './Modal.vue'
+
     export default {
         components: {
             Modal
         },
-        data(){
-            return{
-                show:true
+        data() {
+            return {
+                show: true
             }
         },
-        created(){
+        created() {
             console.log('login modal created')
         },
-        methods:{
-            close(){
-                this.show = false
+        methods: {
+            close() {
+                this.$refs.modal.close()
             },
-            open(){
-                this.show = true
+            open() {
+                this.$refs.modal.open()
             },
-            toggle(){
-                this.show = !this.show
+            toggle() {
+                this.$refs.modal.toggle()
             }
-        }
+        },
     }
 </script>
 <style scoped>
