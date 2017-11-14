@@ -1,11 +1,12 @@
 import axios from 'axios'
 import API from './API'
+import ClientError from './ClientError'
 
 const deliverResponse = response => {
     if (response.data.status === 200) {
         return response.data.data
     } else {
-        throw new Error(response.data.message)
+        throw new ClientError(response)
     }
 }
 

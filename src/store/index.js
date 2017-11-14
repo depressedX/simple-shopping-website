@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import resources from './resources'
+import ClientError from './ClientError'
 
 Vue.use(Vuex)
 
@@ -74,7 +75,12 @@ const store = new Vuex.Store({
             resources.createCart(payload)
                 .then(
                     () => {
+                        // 请求成功
                         dispatch('checkoutCart')
+                    },
+                    (e)=>{
+                        // error
+                        throw e
                     }
                 )
         },

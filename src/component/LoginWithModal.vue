@@ -7,13 +7,13 @@
                                                              id="username"/>
                 </div>
                 <div class="style-wrapper row" style="text-align: right;">
-                    <a href="javascript:void (0)" @click="" class="login-btn">登录</a>
+                    <button class="login-btn">登录</button>
                 </div>
             </div>
         </modal>
 </template>
 <script>
-    import Modal from './Modal.vue'
+    import Modal from './modal/Modal.vue'
 
     export default {
         components: {

@@ -4,7 +4,7 @@
         <div class="good-name">{{name}}</div>
         <div class="row-wrapper">
             <div class="good-price">￥{{price}}</div>
-            <s-button @click="addToCart(itemId,1)" :class="['add-to-cart',added?'disabled':'']">加入购物车</s-button>
+            <s-button ref="add-btn" @click="addToCart(itemId,1)" :class="['add-to-cart']">加入购物车</s-button>
         </div>
         <!--<div class="good-rates">已有30人评价</div>-->
     </div>
@@ -13,6 +13,7 @@
     import defaultImgSrc from '../img/default_food.jpg'
     import SButton from './SButton.vue'
     import store from '../store'
+    import statusCode from '../store/statusCode'
 
     export default {
         components: {
@@ -42,10 +43,18 @@
         },
         methods:{
             addToCart(itemId,num){
+
+                this.$refs['add-btn'].preventClickEvent()
                 store.dispatch('addToCart',{itemId,num})
                     .then(
                         ()=>{
-
+                            this.$refs['add-btn'].allowClickEvent()
+                        },
+                        e=>{
+                            if (e.status == statusCode.CART_FULLFILLED){
+//                                购物车已满
+                                this.$refs['add-btn'].allowClickEvent()
+                            }
                         }
                     )
             }

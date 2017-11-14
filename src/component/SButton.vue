@@ -1,5 +1,5 @@
 <template>
-    <a href="javascript:void (0)" @click="_handleClickEvent"><slot></slot></a>
+    <button @click="_handleClickEvent"><slot></slot></button>
 </template>
 <script>
     export default {
@@ -14,6 +14,12 @@
                 if (this.clickable){
                     this.$emit('click')
                 }
+            },
+            preventClickEvent(){
+                this.clickable = false
+            },
+            allowClickEvent(){
+                this.clickable = true
             }
         }
     }
