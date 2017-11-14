@@ -16,6 +16,7 @@
                     :name="props.data.name"
                     :price="props.data.price"
                     :itemId="props.data.itemId"
+                    :added="props.data.added"
             ></good-display>
         </flex-container>
     </div>
