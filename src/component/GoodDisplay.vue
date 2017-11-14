@@ -39,6 +39,11 @@
         methods:{
             addToCart(itemId,num){
                 store.dispatch('addToCart',{itemId,num})
+                    .then(
+                        ()=>{
+
+                        }
+                    )
             }
         }
     }
