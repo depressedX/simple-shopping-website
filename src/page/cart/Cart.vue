@@ -4,7 +4,7 @@
             <thead class="cart-table__head">
             <tr>
                 <td>
-                    <checkbox v-model="selectAll" ref="select-all"></checkbox>
+                    <checkbox v-model="selectAll" value="all" ref="select-all"></checkbox>
                     <a href="javascript:void (0)" @click="selectAll=!selectAll">全选</a>
                 </td>
                 <td>商品名称</td>
@@ -18,7 +18,7 @@
                     v-for="cart in cartList"
                     :cartInfo="cart"
                     :key="cart.cartId"
-                    v-model="cart.selected"
+                    v-model="selectedItem"
                     class="cart-table__row">
             </cart-tr>
             </tbody>
@@ -44,38 +44,40 @@
         },
         data() {
             return {
-                selectAll: false
+                selectAll: false,
+                selectedItem:[]
             }
         },
         computed: {
-            cartList: () => state.cart.list.map(obj => assign(obj, {selected: false}))
+//            cartList: () => state.cart.list.map(obj => assign(obj, {selected: false}))
+            cartList: () => state.cart.list
+        },
+        methods:{
+            test(...args){
+                console.log(args)
+            }
         },
         watch: {
-            selectAll(flag) {
-                this.cartList.map(cart => {
-                    cart.selected = flag
-                })
-            },
-            cartList(value){
-                /*******************************
-                 *
-                 */
-                let result1 = value.reduce((pre,cur)=>pre && cur,true)
-                let result2 = value.reduce((pre,cur)=>pre && !cur,false)
-                if (result1){
-                    this.selectAll = true
-                }
-                if (result2){
-
+            selectAll(value){
+                if (value){
+                    this.cartList.forEach(value=>{
+                        if (!this.selectedItem.includes(value.itemId)){
+                            this.selectedItem.push(value.itemId)
+                        }
+                    })
+                }else {
+                    this.selectedItem.splice(0,this.selectedItem.length)
                 }
             }
         }
 
     }
 
-    function assign() {
+    function assign(...source) {
         let res = {}
-        Object.assign.apply(null, arguments)
+        source.map(source=>{Object.assign(res,source)})
+//        Object.assign(res,target)
+//        Object.assign.apply(null, arguments)
         return res
     }
 </script>

@@ -9,5 +9,3 @@ new Vue({
     template:'<router-view></router-view>',
     router,
 })
-
-console.log(process)

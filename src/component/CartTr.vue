@@ -1,6 +1,6 @@
 <template>
     <tr style="text-align: center">
-        <td><checkbox @input="$emit('input',value)" v-model="value"></checkbox></td>
+        <td><checkbox ref="checkbox" :value="cartInfo.itemId" @change="changeHandler(arguments[0])" v-model="checked"></checkbox></td>
         <td style="text-align: left">
             <img :src="cartInfo.imgSrc||defaultImg" class="cart-img"/>
             <span>{{cartInfo.name}}</span>
@@ -17,6 +17,10 @@
     import Counter from './Counter.vue'
     import defaultImg from '../img/default_food.jpg'
     export default {
+        model:{
+            prop:'selectedItem',
+            event:'change'
+        },
         components:{
             Checkbox,
             Counter
@@ -24,7 +28,7 @@
         data(){
             return {
                 defaultImg,
-                selected:false
+                checked:false
             }
 
         },
@@ -33,7 +37,27 @@
                 type:Object,
                 required:true
             },
-            value:Boolean
+            selectedItem:{
+                default:[]
+            }
+        },
+        watch:{
+            selectedItem(value){
+                this.checked = value.includes(this.cartInfo.itemId)
+            }
+        },
+        methods:{
+            changeHandler(checked){
+                let newSelectedItem = this.selectedItem
+                if (!checked){
+//                需要把该项从列表中删除
+                    newSelectedItem.splice(newSelectedItem.indexOf(this.$refs.checkbox.value),1)
+                }else {
+//                    通过冒泡事件添加到selectedItem中
+                    newSelectedItem.push(this.$refs.checkbox.value)
+                }
+                this.$emit('change',newSelectedItem)
+            }
         }
     }
 </script>
