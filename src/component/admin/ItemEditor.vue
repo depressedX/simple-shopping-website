@@ -1,6 +1,7 @@
 <template>
     <div>
         <img :src="imgSrc"/>
+        <input type="file" @change="fileHandler" accept="image/*"/>
         <br/>
         <label for="name">名称</label>
         <input name="name" :value="name" id="name"/>
@@ -53,6 +54,11 @@
         methods:{
             submit(){
                 
+            },
+            fileHandler(event){
+                const file = event.target.files[0]
+                if (!file) return
+                this.imgSrc = URL.createObjectURL(file)
             }
         }
     }

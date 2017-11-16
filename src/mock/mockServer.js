@@ -19,7 +19,8 @@ const itemList = Mock.mock({
         {
             'itemId|+1': 0,
             name: '@itemname@integer(1,50)',
-            'price|20-200.2-2': 0.00
+            'price|20-200.2-2': 0.00,
+            'added|3-1':true
         }
     ]
 }).items

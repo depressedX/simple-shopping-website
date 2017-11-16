@@ -31,6 +31,7 @@ module.exports = {
         historyApiFallback: true,//不跳转
         inline: true, //实时刷新
         host:'localhost',
+        port:8888
     },
     module: {
         rules: [

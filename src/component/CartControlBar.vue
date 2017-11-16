@@ -1,8 +1,8 @@
 <template>
     <div class="cart-control-bar">
         <div class="select-all-wrapper">
-            <checkbox ref="selectAllCheckbox" v-model="selectAll" value="all" @change="$emit('change',arguments[0])"></checkbox>
-            <a href="javascript:void (0)" @click="$emit('change',!selectAll)">全选</a>
+            <checkbox ref="selectAllCheckbox" :checkState="selectAll" value="all" @change="cartsOperaiton(arguments[0])"></checkbox>
+            <a href="javascript:void (0)" @click="cartsOperaiton(!selectAll)">全选</a>
         </div>
         <a href="javascript:void (0)" @click="" class="delete-selection">删除所选</a>
         <span>共选商品<span style="color:#ed1c24">{{cartNum}}</span>件</span>
@@ -43,6 +43,14 @@
         watch: {
             value(value){
                 this.selectAll = value
+            }
+        },
+        methods:{
+            cartsOperaiton(flag){
+                if (flag===this.selectAll) return
+                this.selectAll = flag
+                this.$emit('change',flag)
+
             }
         }
     }

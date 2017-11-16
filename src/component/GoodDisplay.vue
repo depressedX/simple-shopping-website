@@ -4,7 +4,8 @@
         <div class="good-name">{{name}}</div>
         <div class="row-wrapper">
             <div class="good-price">￥{{price}}</div>
-            <s-button ref="add-btn" @click="addToCart(itemId,1)" :class="['add-to-cart']">加入购物车</s-button>
+            <s-button ref="add-btn" @click="addToCart(itemId,1)" :class="['add-to-cart',added?'':'disabled']">加入购物车
+            </s-button>
         </div>
         <!--<div class="good-rates">已有30人评价</div>-->
     </div>
@@ -32,28 +33,30 @@
                 type: Number,
                 default: 0.00
             },
-            itemId:{
-                type:Number,
-                require:true
+            itemId: {
+                type: Number,
+                require: true
             },
-            added:{
-                type:Boolean,
-                require:true
+            added: {
+                type: Boolean,
+                require: true
             }
         },
-        methods:{
-            addToCart(itemId,num){
+        methods: {
+            addToCart(itemId, num) {
                 this.$refs['add-btn'].preventClickEvent()
-                store.dispatch('addToCart',{itemId,num})
+                store.dispatch('addToCart', {itemId, num})
                     .then(
-                        ()=>{
+                        () => {
                             this.$refs['add-btn'].allowClickEvent()
+                            store.commit('createNoticeModal', '添加成功')
+                            store.dispatch('checkoutCart')
                         },
-                        e=>{
+                        e => {
                             this.$refs['add-btn'].allowClickEvent()
-                            if (e.status == statusCode.CART_FULLFILLED){
+                            if (e.status == statusCode.CART_FULLFILLED) {
 //                                购物车已满
-                                store.commit('createNoticeModal',e.message)
+                                store.commit('createNoticeModal', e.message)
                             }
                         }
                     )
@@ -72,27 +75,33 @@
         height: 200px;
         object-fit: cover;
     }
-    .good-name{
+
+    .good-name {
         padding: 1em 0;
     }
-    .good-price{
+
+    .good-price {
         font-size: 1.2em;
         color: #ed1c24;
     }
-    .add-to-cart{
+
+    .add-to-cart {
         font-size: 1.6em;
         background-color: #ed1c24;
     }
-    .row-wrapper{
+
+    .row-wrapper {
         display: flex;
         justify-content: space-between;
         align-items: baseline;
         margin-bottom: 2em;
     }
-    .good-rates{
+
+    .good-rates {
         color: gray;
     }
-    .add-to-cart.disabled{
+
+    .add-to-cart.disabled {
         pointer-events: none;
         background-color: gray;
 
