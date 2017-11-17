@@ -6,14 +6,15 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        isLogin:false,
+        isLogin:true,
+        username:'刘鹏昊',
 
         // 存放某页的商品
         item: {
             total: 0,
             list: [],
             curPage: 1,
-            numPerPage: 6,
+            numPerPage: 30,
         },
         // 存放购物车的商品
         cart: {
@@ -28,23 +29,29 @@ const store = new Vuex.Store({
         }
     },
     mutations: {
+        // 修改物品
         modifyItem(state, payload) {
             storeObject(payload, state.item)
         },
+        // 创建新的物品
         createitem(state, payload) {
             state.item.list.push(payload)
         },
+        // 修改购物车信息
         modifyCart(state, payload) {
             state.cart.list = payload.list || state.cart.list
             state.cart.total = state.cart.list.length
         },
+        // 修改购物车物品数量
         modifyItemNum(state, num) {
             state.item.total = num
         },
+        // 创建Notice模态框
         createNoticeModal(state,message){
             state.globalNoticeModal.message = message
             state.globalNoticeModal.show = true
         },
+        // 释放Notice模态框
         disposeNoticeModal(state){
             state.globalNoticeModal.show = false
         }
@@ -75,6 +82,7 @@ const store = new Vuex.Store({
                     })
                 })
         },
+        // 更新物品数量
         checkoutItemNum({commit}) {
             resources.getItemNum()
                 .then(
@@ -107,6 +115,7 @@ const store = new Vuex.Store({
         forwardItemPage({dispatch, state}) {
             dispatch('checkoutItem', {curPage: state.item.curPage - 1})
         },
+        // 创建商品
         createItem({dispatch, commit}, {img, name, price}) {
             dispatch('_uploadImg', img)
                 .then(
@@ -123,12 +132,14 @@ const store = new Vuex.Store({
                     }
                 )
         },
+        // 上传图片(一般不单独上传 所以是私有的)
         _uploadImg(context, img) {
             return resources.uploadImg(img)
                 .then(
                     (response) => response.imgSrc
                 )
         },
+        // 获取单个物品
         getSingleItem(context,itemId){
             return resources.getItem(itemId)
         },
@@ -145,6 +156,10 @@ const store = new Vuex.Store({
                         throw e
                     }
                 )
+        },
+
+        submitOrder(){
+
         }
     }
 
@@ -152,6 +167,8 @@ const store = new Vuex.Store({
 
 export default store
 export let state = store.state
+export let commit = store.commit
+export let dispatch = store.dispatch
 
 function storeObject(data, target) {
     Object.keys(data).forEach((value) => {

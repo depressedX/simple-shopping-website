@@ -7,7 +7,6 @@
             <s-button ref="add-btn" @click="addToCart(itemId,1)" :class="['add-to-cart',added?'':'disabled']">加入购物车
             </s-button>
         </div>
-        <!--<div class="good-rates">已有30人评价</div>-->
     </div>
 </template>
 <script>
@@ -66,13 +65,14 @@
 </script>
 <style scoped="">
     .good-display {
-        width: 200px;
+        width: 170px;
         margin-bottom: 2em;
     }
 
+
     .good-img {
-        width: 200px;
-        height: 200px;
+        width: 170px;
+        height: 170px;
         object-fit: cover;
     }
 
@@ -87,6 +87,7 @@
 
     .add-to-cart {
         font-size: 1.6em;
+        color: white;
         background-color: #ed1c24;
     }
 
@@ -95,10 +96,6 @@
         justify-content: space-between;
         align-items: baseline;
         margin-bottom: 2em;
-    }
-
-    .good-rates {
-        color: gray;
     }
 
     .add-to-cart.disabled {

@@ -18,7 +18,10 @@ const routes = [
             {
                 path:'cart',
                 name:'cart',
-                component:Cart
+                component:Cart,
+                meta:{
+                    requireAuth:true
+                }
             },
             {
                 path:'admin/item',

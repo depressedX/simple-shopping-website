@@ -88,7 +88,7 @@ Mock.mock(/\/api\/carts$/, 'get',  {
             'cartId|+1': 0,
             'itemId|0-255': 0,
             'name': '@Name',
-            'num|1-3': 0,
+            'num': 1,
             'price|20-200.2-2': 0.00
         }]
     }

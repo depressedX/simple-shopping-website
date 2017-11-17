@@ -11,7 +11,7 @@ const deliverResponse = response => {
 }
 
 const request = {
-    getItemNum(){
+    getItemNum() {
         return axios.get(API.getItemNum)
             .then(deliverResponse)
     },
@@ -62,14 +62,19 @@ const request = {
             .then(deliverResponse)
     },
     deleteCarts(idList) {
-        return axios.post(API.deleteCarts, {idList})
+        return axios.post(API.deleteCarts, {idList:idList.join(',')})
             .then(deliverResponse)
     },
 
-    uploadImg(img){
+    createOrder(bundle) {
+        return axios.post(API.createOrder, {cartList: bundle.selectedCartId.join(','), address: bundle.address})
+            .then(deliverResponse)
+    },
+
+    uploadImg(img) {
         let formData = new FormData()
-        formData.append('img',img)
-        return axios.post(API.uploadImg,formData)
+        formData.append('img', img)
+        return axios.post(API.uploadImg, formData)
             .then(deliverResponse)
     }
 }

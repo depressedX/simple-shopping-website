@@ -20,22 +20,6 @@
             </s-button>
         </section>
         <section class="main-wrapper">
-            <aside v-if="$route.name!=='itemAdmin'&&$route.name!=='detailItemAdmin'">
-                <!--<div class="header-wrapper">-->
-                <!--<img :src="customerImg">-->
-                <!--<h1 class="cn">客服中心</h1>-->
-                <!--<h1 class="en">CUSTOMER SERVICE</h1>-->
-                <!--</div>-->
-                <!--<hr/>-->
-                <!--<h2>售前导购</h2>-->
-                <!--<p class="customer-server">小新</p>-->
-                <!--<hr/>-->
-                <!--<h2>售后导购</h2>-->
-                <!--<p class="customer-server">小新</p>-->
-                <!--<hr/>-->
-                <!--<h2>工作时间</h2>-->
-                <!--<p>周一至周六:AM 08:30-PM 00:00</p>-->
-            </aside>
             <router-view class="main-content"></router-view>
         </section>
         <login v-if="showLoginModal" @requestclose="showLoginModal=false"></login>
@@ -174,59 +158,10 @@
     }
 
     .main-wrapper {
-        display: flex;
-    }
-
-    aside, .main-content {
-        flex-basis: 0;
-    }
-
-    aside {
-        flex-grow: 1;
     }
 
     .main-content {
-        flex-grow: 4;
+        width:100%;
     }
-
-    aside {
-        padding-right: 4em;
-    }
-
-    aside .header-wrapper {
-        margin-bottom: 1em;
-    }
-
-    aside .header-wrapper img {
-        float: left;
-    }
-
-    aside .header-wrapper h1.en {
-        font-size: .8em;
-        margin-top: 0;
-    }
-
-    aside .header-wrapper h1.cn {
-        margin-bottom: 0;
-    }
-
-    .customer-server {
-        display: inline-block;
-        padding: 1em 2em;
-        position: relative;
-        line-height: 1;
-    }
-
-    .customer-server:after {
-        content: '';
-        position: absolute;
-        top: -.8em;
-        left: calc(100% - 2em);
-        width: 2em;
-        height: 2em;
-        background-image: url("./img/customer_service.png");
-        background-size: contain;
-    }
-
 
 </style>

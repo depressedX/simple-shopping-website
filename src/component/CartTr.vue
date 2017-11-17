@@ -1,8 +1,10 @@
 <template>
     <tr style="text-align: center">
         <td>
-            <checkbox ref="checkbox" :value="cartInfo.itemId" @change="changeHandler(arguments[0])"
-                      v-model="checked"></checkbox>
+            <checkbox ref="checkbox"
+                      :value="cartInfo.cartId"
+                      @change="changeHandler(arguments[0])"
+                      v-model="checked"/>
         </td>
         <td style="text-align: left">
             <img :src="cartInfo.imgSrc||defaultImg" class="cart-img"/>
@@ -11,10 +13,7 @@
         <td>
             <span>{{cartInfo.price}}</span>
         </td>
-        <td>
-            <counter></counter>
-        </td>
-        <td><a href="javascript:void (0)" class="delete-cart">删除</a></td>
+        <td><a href="javascript:void (0)" class="delete-cart" @click="$emit('deleteCart')">删除</a></td>
     </tr>
 </template>
 <script>
@@ -24,7 +23,7 @@
 
     export default {
         model: {
-            prop: 'selectedItem',
+            prop: 'selectedCartId',
             event: 'change'
         },
         components: {
@@ -43,26 +42,29 @@
                 type: Object,
                 required: true
             },
-            selectedItem: {
+            selectedCartId: {
                 default: []
             }
         },
         watch: {
-            selectedItem(value) {
-                this.checked = value.includes(this.cartInfo.itemId)
+            selectedCartId(value) {
+                this.checked = value.includes(this.cartInfo.cartId)
             }
         },
         methods: {
             changeHandler(checked) {
-                let newSelectedItem = this.selectedItem
+                let newSelectedCartId = this.selectedCartId
                 if (!checked) {
 //                需要把该项从列表中删除
-                    newSelectedItem.splice(newSelectedItem.indexOf(this.$refs.checkbox.value), 1)
+                    newSelectedCartId.splice(newSelectedCartId.indexOf(this.$refs.checkbox.value), 1)
                 } else {
 //                    通过冒泡事件添加到selectedItem中
-                    newSelectedItem.push(this.$refs.checkbox.value)
+                    newSelectedCartId.push(this.$refs.checkbox.value)
                 }
-                this.$emit('change', newSelectedItem)
+                this.$emit('change', newSelectedCartId)
+            },
+            deleteCart(){
+
             }
         }
     }

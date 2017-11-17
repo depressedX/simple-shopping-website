@@ -4,10 +4,10 @@
             <checkbox ref="selectAllCheckbox" :checkState="selectAll" value="all" @change="cartsOperaiton(arguments[0])"></checkbox>
             <a href="javascript:void (0)" @click="cartsOperaiton(!selectAll)">全选</a>
         </div>
-        <a href="javascript:void (0)" @click="" class="delete-selection">删除所选</a>
-        <span>共选商品<span style="color:#ed1c24">{{cartNum}}</span>件</span>
+        <a href="javascript:void (0)" @click="$emit('delete')" class="delete-selection">删除所选</a>
+        <span>共选商品<span style="color:#ed1c24">{{selectedCartNum}}</span>件</span>
         <span style="padding: 0 1em">合计￥<span style="color: #ed1c24">{{totalPrice}}</span></span>
-        <a href="javascript:void (0)" class="purchase-btn" @click="">结算</a>
+        <a href="javascript:void (0)" class="purchase-btn" @click="$emit('submit')">结算</a>
     </div>
 </template>
 <script>
@@ -27,13 +27,14 @@
             }
         },
         props: {
-            cartNum: {
+            selectedCartNum: {
                 type: Number,
                 default: 0
             },
             totalPrice: {
                 type: Number,
                 default: 0
+
             },
             value:{
                 type:Boolean,

@@ -25,3 +25,8 @@
         }
     }
 </script>
+<style scoped>
+    button:hover{
+        cursor: pointer;
+    }
+</style>

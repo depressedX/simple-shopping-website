@@ -13,7 +13,7 @@
         },
         data() {
             return {
-                numPerRow: 3
+                numPerRow: 5
             }
         },
         props: {

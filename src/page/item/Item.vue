@@ -52,10 +52,6 @@
         methods:{
             nextPage(){
                 store.dispatch('nextItemPage')
-//                resources.getItemList(++this.curPage,this.numPerPage).then(response=>{
-//                    this.goodList = response.item
-//                    this.total = response.total
-//                })
             },
             forwardPage(){
                 store.dispatch('forwardItemPage')
