@@ -8,7 +8,14 @@
                 <li class="nav-item">
                     <router-link :to="{name:'item'}">首页</router-link>
                     <router-link :to="{name:'itemAdmin'}">管理</router-link>
-                    <a href="javascript:void (0)" @click="showLoginModal=!showLoginModal">登录</a>
+                    <a
+                            href="javascript:void (0)"
+                            @click="showLoginModal=!showLoginModal"
+                            v-if="!isLogin">登录</a>
+                    <a
+                            href="javascript:void (0)"
+                            @click="logout"
+                            v-else>注销</a>
                 </li>
             </ul>
         </nav>
@@ -36,9 +43,6 @@
 
     export default {
         created() {
-//            resources.getCartNum().then(num=>{
-//                this.totalCarts = num
-//            })
 //            向store请求更新 购物车数量 商品列表
             store.dispatch('checkoutCart')
             store.dispatch('checkoutItemNum')
@@ -57,7 +61,8 @@
         computed: {
             cartNum: () => store.state.cart.total,
             showNoticeModal: () => state.globalNoticeModal.show,
-            noticeModalMessage: () => state.globalNoticeModal.message
+            noticeModalMessage: () => state.globalNoticeModal.message,
+            isLogin: () => state.isLogin
         },
         watch: {},
         components: {
@@ -69,6 +74,12 @@
             test() {
                 console.log('test')
                 console.log('click')
+            },
+            logout() {
+                store.dispatch('logout')
+                    .then(() => {
+                        this.$router.push({name: 'item'})
+                    })
             }
         }
     }
@@ -161,7 +172,7 @@
     }
 
     .main-content {
-        width:100%;
+        width: 100%;
     }
 
 </style>

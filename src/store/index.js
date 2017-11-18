@@ -157,9 +157,16 @@ const store = new Vuex.Store({
                     }
                 )
         },
-
-        submitOrder(){
-
+        logout({state}){
+            resources.logout()
+                .then(
+                    ()=>{
+                        state.isLogin = false
+                    },
+                    e=>{
+                        throw e
+                    }
+                )
         }
     }
 

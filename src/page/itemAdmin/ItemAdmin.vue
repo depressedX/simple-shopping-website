@@ -10,7 +10,7 @@
 
                 v-for="item in itemList"
                 :key="item.itemId"
-                class="item"></item>
+                class="item"/>
     </div>
 </template>
 <script>
@@ -25,7 +25,6 @@
             itemList: () => state.item.list
         },
         created() {
-//            store.dispatch('')
         }
     }
 </script>

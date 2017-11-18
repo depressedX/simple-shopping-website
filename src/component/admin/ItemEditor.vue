@@ -1,10 +1,10 @@
 <template>
     <div>
-        <img :src="imgSrc"/>
+        <img :src="displayedImgSrc"/>
         <input type="file" @change="fileHandler" accept="image/*"/>
         <br/>
         <label for="name">名称</label>
-        <input name="name" :value="name" id="name"/>
+        <input name="name" v-model="name" id="name"/>
         <br/>
         <label for="pirce">价格</label>
         <input name="name" v-model="price" id="pirce"/>
@@ -13,8 +13,9 @@
     </div>
 </template>
 <script>
-    import {state, default as store} from '../../store'
+    import {state, default as store,commit} from '../../store'
     import defaultImg from '../../img/default_food.jpg'
+    import resources from '../../store/resources'
 
 
     export default {
@@ -22,7 +23,10 @@
             return {
                 name: '',
                 price: 0,
-                imgSrc: defaultImg
+                imgSrc: null,
+                img: null,
+                displayedImgSrc:defaultImg,
+                needUploadImg: false
             }
         },
         created() {
@@ -30,7 +34,7 @@
                 store.dispatch('getSingleItem', this.itemId)
                     .then(
                         (item) => {
-                            this.imgSrc = item.imgSrc || defaultImg
+                            this.displayedImgSrc = item.imgSrc || defaultImg
                             this.price = item.price
                             this.name = item.name
                         }
@@ -51,14 +55,73 @@
                 return this.isNewItem ? '创建物品' : '修改物品'
             }
         },
-        methods:{
-            submit(){
-                
+        methods: {
+            // 创建商品
+            submit() {
+                let uploadImg = new Promise((resolve, reject) => {
+                    if (this.needUploadImg) {
+                        resources.uploadImg(this.img)
+                            .then(
+                                data => {
+                                    resolve(data.imgSrc)
+                                },
+                                error => {
+                                    reject(error)
+                                }
+                            )
+                    }else {
+                        resolve(null)
+                    }
+
+                })
+                uploadImg.then(
+                    (imgSrc)=>{
+                        let bundle = {name:this.name,price:this.price,imgSrc}
+                        if (this.isNewItem){
+                            resources.createItem(bundle)
+                                .then(
+                                    itemId=>resources.getItem(itemId),
+                                    error=>{
+                                        commit('createNoticeModal',error.message)
+                                    }
+                                )
+                                .then(
+                                    item=>{
+                                        commit('createItem',item)
+                                        commit('createNoticeModal','创建成功')
+                                        this.$router.push({name:'itemAdmin'})
+                                    },
+                                    error=>{
+                                        commit('createNoticeModal',error.message)
+                                    }
+                                )
+                        }else {
+                            resources.updateItem(this.itemId,bundle)
+                                .then(
+                                    ()=>{
+                                        store.dispatch('checkoutItem')
+                                    },
+                                    error=>{
+                                        commit('createNoticeModal',error.message)
+                                    }
+                                )
+                        }
+                    }
+                )
             },
-            fileHandler(event){
+            // 上传图片(一般不单独上传 所以是私有的)
+            _uploadImg() {
+                return resources.uploadImg(img)
+                    .then(
+                        (response) => response.imgSrc
+                    )
+            },
+            fileHandler(event) {
                 const file = event.target.files[0]
                 if (!file) return
-                this.imgSrc = URL.createObjectURL(file)
+                this.needUploadImg = true
+                this.img = file
+                this.displayedImgSrc = URL.createObjectURL(file)
             }
         }
     }
