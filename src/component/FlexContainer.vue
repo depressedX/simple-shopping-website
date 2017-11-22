@@ -13,13 +13,17 @@
         },
         data() {
             return {
-                numPerRow: 5
+//                numPerRow: 5
             }
         },
         props: {
             items: {
                 type: Array,
                 default: []
+            },
+            numPerRow:{
+                type:Number,
+                default:5
             }
         },
         watch: {
@@ -38,6 +42,7 @@
         flex-wrap: wrap;
     }
     .empty{
-        width: 200px;
+        width: 170px;
+        margin-bottom: 2em;
     }
 </style>

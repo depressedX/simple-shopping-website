@@ -3,21 +3,23 @@ export default {
     getItemNum:match(API_ADDRESS+'item/total'),
     getItemList:match(API_ADDRESS+'items'),
     getItem:match(API_ADDRESS+'item/${id}'),
-    createItem:match(API_ADDRESS+'item/add'),
-    updateItem:match(API_ADDRESS+'item/update/${id}'),
+    createItem:match(API_ADDRESS+'all/item/add'),
+    updateItem:match(API_ADDRESS+'all/item/update/${id}'),
+    deleteItem:match(API_ADDRESS+'all/item/delete/${id}'),
 
-    login:match(API_ADDRESS+'user/login'),
+    login:match(API_ADDRESS+'all/user/login'),
     logout:match(API_ADDRESS+'user/logout'),
 
     getCartNum:match(API_ADDRESS+'cart/total'),
     getCartList:match(API_ADDRESS+'carts'),
     createCart:match(API_ADDRESS+'cart/add'),
     updateCart:match(API_ADDRESS+'cart/update/${id}'),
-    deleteCarts:match(API_ADDRESS+'cart/delete'),
+    deleteCarts:match(API_ADDRESS+'carts/delete'),
 
     createOrder:match(API_ADDRESS+'order'),
 
-    uploadImg:match(API_ADDRESS+'util/uploadPicture')
+    uploadImg:match(API_ADDRESS+'all/util/uploadPicture'),
+    downloadData:API_ADDRESS+'all/util/downloadData'
 }
 
 
@@ -52,6 +54,7 @@ function match(s) {
         _match.valueOf = _match.toString = function () {
             return __s;
         }
+        if (!reg.test(__s)) return __s;
         return _match;
     }
 

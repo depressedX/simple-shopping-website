@@ -1,10 +1,10 @@
 <template>
     <div class="good-display">
-        <img :src="imgSrc" class="good-img"/>
+        <img :src="imgSrc||defaultImgSrc" class="good-img"/>
         <div class="good-name">{{name}}</div>
         <div class="row-wrapper">
             <div class="good-price">￥{{price}}</div>
-            <s-button ref="add-btn" @click="addToCart(itemId,1)" :class="['add-to-cart',added?'':'disabled']">加入购物车
+            <s-button ref="add-btn" @click="addToCart(itemId,1)" :class="['add-to-cart',added?'disabled':'']">加入购物车
             </s-button>
         </div>
     </div>
@@ -18,6 +18,13 @@
     export default {
         components: {
             SButton
+        },
+        created(){
+        },
+        data(){
+            return{
+                defaultImgSrc
+            }
         },
         props: {
             imgSrc: {
@@ -49,14 +56,14 @@
                         () => {
                             this.$refs['add-btn'].allowClickEvent()
                             store.commit('createNoticeModal', '添加成功')
-                            store.dispatch('checkoutCart')
+                            store.dispatch('checkoutItem')
                         },
                         e => {
                             this.$refs['add-btn'].allowClickEvent()
                             if (e.status == statusCode.CART_FULLFILLED) {
 //                                购物车已满
-                                store.commit('createNoticeModal', e.message)
                             }
+                            store.commit('createNoticeModal', e.message)
                         }
                     )
             }
@@ -74,6 +81,11 @@
         width: 170px;
         height: 170px;
         object-fit: cover;
+        padding: 5px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        overflow: hidden;
+
     }
 
     .good-name {

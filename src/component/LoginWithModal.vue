@@ -46,10 +46,13 @@
                         .then(
                             ()=>{
                                 this.$emit('requestclose')
+                                store.commit('createNoticeModal','登陆成功')
+                                store.dispatch('checkoutItem')
                             },
                             e=>{
                                 this.$refs.submit.allowClickEvent()
                                 this.$emit('requestclose')
+                                console.log(e)
                                 store.commit('createNoticeModal',e.message)
                             }
                         )

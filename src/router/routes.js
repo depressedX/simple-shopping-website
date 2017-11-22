@@ -4,6 +4,9 @@ import Cart from '../page/cart/Cart.vue'
 import ItemAdmin from '../page/itemAdmin/ItemAdmin.vue'
 import DetailItemAdmin from '../page/detailItemAdmin/DetailItemAdmin.vue'
 
+// const ROOT_ROUTE = process.env.NODE_ENV==='production'?'SimpleShoppingWebsite':''
+// const ROOT_ROUTE = 'SimpleShoppingWebsite'
+const ROOT_ROUTE = ''
 const routes = [
     {
         path:ROOT_ROUTE+'/',
@@ -35,9 +38,13 @@ const routes = [
                 props:true
             }
         ]
+    },
+    {
+        path:'*',
+        redirect:{
+            name:'item'
+        }
     }
 ]
-
-
 
 export default routes

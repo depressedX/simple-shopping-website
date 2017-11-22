@@ -149,6 +149,7 @@
                         () => {
                             commit('createNoticeModal', '删除成功')
                             this.selectedCartId = []
+                            dispatch('checkoutCart')
                         },
                         (error) => {
                             commit('createNoticeModal', `删除失败 ${error}`)

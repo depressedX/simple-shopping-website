@@ -20,11 +20,11 @@
             </ul>
         </nav>
         <section class="cart-info" v-if="$route.name!=='itemAdmin'&&$route.name!=='detailItemAdmin'">
+            <router-link :to="{name:'cart'}">
             <s-button class="cart-btn">
-                <router-link :to="{name:'cart'}">
                     <span>我的购物车</span><i class="cart-icon"><span class="cart-num">{{cartNum}}</span></i>
-                </router-link>
             </s-button>
+            </router-link>
         </section>
         <section class="main-wrapper">
             <router-view class="main-content"></router-view>
@@ -45,8 +45,6 @@
         created() {
 //            向store请求更新 购物车数量 商品列表
             store.dispatch('checkoutCart')
-            store.dispatch('checkoutItemNum')
-            store.dispatch('checkoutItem')
         },
         data() {
             return {

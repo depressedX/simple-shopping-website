@@ -1,6 +1,7 @@
 <template>
     <div>
         <h1>管理商品</h1>
+        <a href="javascript:void (0)" @click="downloadData">下载数据</a>
         <router-link :to="{name:'detailItemAdmin',params:{itemId:'-1'}}" class="create-item-btn" >添加物品</router-link>
         <item
                 :name="item.name"
@@ -16,6 +17,7 @@
 <script>
     import {state, default as store} from '../../store'
     import Item from '../../component/admin/Item.vue'
+    import resources from '../../store/resources'
 
     export default {
         components: {
@@ -25,6 +27,12 @@
             itemList: () => state.item.list
         },
         created() {
+            store.dispatch('checkoutItem')
+        },
+        methods:{
+            downloadData(){
+                resources.downloadData()
+            }
         }
     }
 </script>

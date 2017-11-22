@@ -7,7 +7,8 @@ const env={
     'dev':{
         MODE:'dev',
         ROOT_ROUTE:'',
-        API_ROOT_PATH:''
+        // API_ROOT_PATH:'',
+        API_ROOT_PATH:'http://120.24.70.191:8080/SimpleShoppingWebsite'
     },
     // 线上测试环境
     'debug':{
@@ -24,7 +25,7 @@ module.exports = {
     output: {
         path: __dirname + '/public',
         filename: '[name].js',
-        publicPath: "/"
+        publicPath: process.env.NODE_ENV==='production'?'/SimpleShoppingWebsite':'/SimpleShoppingWebsite'
     },
     devServer: {
         contentBase: "./public",//本地服务器所加载的页面所在的目录
@@ -54,7 +55,8 @@ module.exports = {
                         loader: 'file-loader',
                         options: {
                             name:'[name].[ext]',
-                            outputPath:'assets/'
+                            outputPath:'assets/',
+                            publicPath:'/SimpleShoppingWebsite/'
                         }
                     }
                 ]
@@ -70,7 +72,10 @@ module.exports = {
         new webpack.DefinePlugin({
             API_ROOT_PATH: JSON.stringify(consts.API_ROOT_PATH),
             ROOT_ROUTE: JSON.stringify(consts.ROOT_ROUTE),
-            MODE:JSON.stringify(consts.MODE)
+            MODE:JSON.stringify(consts.MODE),
+            // 'process.env': {
+            //     NODE_ENV: '"production"'
+            // }
         })
     ],
     resolve: {

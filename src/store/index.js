@@ -6,8 +6,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        isLogin:true,
-        username:'刘鹏昊',
+        isLogin: false,
+        username: '',
 
         // 存放某页的商品
         item: {
@@ -23,9 +23,9 @@ const store = new Vuex.Store({
         },
 
 
-        globalNoticeModal:{
-            message:'',
-            show:false
+        globalNoticeModal: {
+            message: '',
+            show: false
         }
     },
     mutations: {
@@ -34,7 +34,11 @@ const store = new Vuex.Store({
             storeObject(payload, state.item)
         },
         // 创建新的物品
-        createitem(state, payload) {
+        createItem(state, payload) {
+            if (payload.imgSrc){
+                payload.imgSrc = 'http://120.24.70.191:8080/SimpleShoppingWebsite'+payload.imgSrc
+
+            }
             state.item.list.push(payload)
         },
         // 修改购物车信息
@@ -47,12 +51,12 @@ const store = new Vuex.Store({
             state.item.total = num
         },
         // 创建Notice模态框
-        createNoticeModal(state,message){
+        createNoticeModal(state, message) {
             state.globalNoticeModal.message = message
             state.globalNoticeModal.show = true
         },
         // 释放Notice模态框
-        disposeNoticeModal(state){
+        disposeNoticeModal(state) {
             state.globalNoticeModal.show = false
         }
     },
@@ -78,8 +82,15 @@ const store = new Vuex.Store({
                     commit('modifyItem', {
                         curPage,
                         numPerPage,
-                        list: response
-                    })
+                        // list: response
+                        list:response.map(item=>{
+                            if (item.imgSrc) item.imgSrc = 'http://120.24.70.191:8080/SimpleShoppingWebsite'+item.imgSrc
+                            return item
+                        })
+                    }),
+                        error => {
+                            console.log(error)
+                        }
                 })
         },
         // 更新物品数量
@@ -94,14 +105,15 @@ const store = new Vuex.Store({
         // 添加购物车
         addToCart({dispatch}, payload = {}) {
             if (!payload.itemId || !payload.num) return;
-            resources.createCart(payload)
+            return resources.createCart(payload)
                 .then(
                     () => {
                         // 请求成功
                         dispatch('checkoutCart')
                     },
-                    (e)=>{
+                    (e) => {
                         // error
+                        console.log('error art')
                         throw e
                     }
                 )
@@ -140,30 +152,42 @@ const store = new Vuex.Store({
                 )
         },
         // 获取单个物品
-        getSingleItem(context,itemId){
+        getSingleItem(context, itemId) {
             return resources.getItem(itemId)
+                .then(
+                    item=>{
+                        if (item.imgSrc) {
+                            item.imgSrc = 'http://120.24.70.191:8080/SimpleShoppingWebsite' + item.imgSrc
+                        }
+                        return item
+                    },
+                    error=>{
+                        throw error
+                    }
+                )
         },
 
         // 登录
-        login({state},payload={}){
+        login({state}, payload = {}) {
             let {username} = payload
             return resources.login(username)
                 .then(
-                    ()=>{
+                    () => {
                         state.isLogin = true
+                        state.username = username
                     },
-                    (e)=>{
+                    (e) => {
                         throw e
                     }
                 )
         },
-        logout({state}){
+        logout({state}) {
             resources.logout()
                 .then(
-                    ()=>{
+                    () => {
                         state.isLogin = false
                     },
-                    e=>{
+                    e => {
                         throw e
                     }
                 )

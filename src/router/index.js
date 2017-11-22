@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
     routes,
-    mode:'history'
+    // mode:'history'
 })
 router.beforeEach((to,from,next)=>{
     // 检查是否有权限

@@ -6,9 +6,8 @@
                 :numPerPage="numPerPage"
                 @next="nextPage"
                 @forward="forwardPage"
-                class="pagination">
-        </pagination>
-        <flex-container :items="itemList" :numPerRow="3">
+                class="pagination"/>
+        <flex-container :items="itemList" :numPerRow="5">
             <good-display
                     slot="item"
                     slot-scope="props"
@@ -16,8 +15,7 @@
                     :name="props.data.name"
                     :price="props.data.price"
                     :itemId="props.data.itemId"
-                    :added="props.data.added"
-            ></good-display>
+                    :added="props.data.added"/>
         </flex-container>
     </div>
 </template>
@@ -36,8 +34,7 @@
         },
         created(){
             console.log('item created')
-//            store请求更新itemList
-//            store.dispatch('checkoutItem')
+            store.dispatch('checkoutItem')
         },
         data(){
             return{
