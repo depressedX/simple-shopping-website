@@ -121,7 +121,16 @@ const request = {
         let hrefDom = document.createElement('a')
         hrefDom.href = API.downloadData
         hrefDom.click()
-    }
+    },
+
+    getDocumentTitle(){
+        return axios.get(API.getDocumentTitle)
+            .then(deliverResponse,throwError)
+    },
+    updateDocumentTitle(documentTitle){
+        return axios.post(API.updateDocumentTitle,{documentTitle})
+            .then(deliverResponse,throwError)
+    },
 }
 
 

@@ -1,8 +1,9 @@
 <template>
-    <div>
+    <div class="content-wrapper">
         <h1>管理商品</h1>
-        <a href="javascript:void (0)" @click="downloadData">下载数据</a>
-        <router-link :to="{name:'detailItemAdmin',params:{itemId:'-1'}}" class="create-item-btn" >添加物品</router-link>
+        <span>下载数据 : </span><a href="javascript:void (0)" @click="downloadData" style="text-decoration: underline">点此下载文件</a><br/>
+        <span>修改标题 : </span><input v-model="documentTitle"/><s-button @click="updateDocumentTitle">保存</s-button><br/>
+        <span>增删物品 : </span><router-link :to="{name:'detailItemAdmin',params:{itemId:'-1'}}" class="create-item-btn" >添加物品</router-link>
         <item
                 :name="item.name"
                 :price="item.price"
@@ -18,10 +19,18 @@
     import {state, default as store} from '../../store'
     import Item from '../../component/admin/Item.vue'
     import resources from '../../store/resources'
+    import SButton from '../../component/SButton.vue'
+    import {commit} from "../../store/index";
 
     export default {
         components: {
-            Item
+            Item,
+            SButton
+        },
+        data(){
+            return {
+                documentTitle:''
+            }
         },
         computed: {
             itemList: () => state.item.list
@@ -32,6 +41,18 @@
         methods:{
             downloadData(){
                 resources.downloadData()
+            },
+            updateDocumentTitle(){
+                let documentTitle = this.documentTitle
+                resources.updateDocumentTitle(documentTitle).then(
+                    ()=>{
+                        commit('createNoticeModal','修改成功')
+                        store.dispatch('checkoutDocumentTitle')
+                    },
+                    (error)=>{
+                        commit('createNoticeModal',error.message)
+                    }
+                )
             }
         }
     }
@@ -54,5 +75,9 @@
     }
     .create-item-btn:hover{
         background-color: #eee;
+    }
+    .content-wrapper{
+        font-size: 1.5rem;
+        line-height: 2;
     }
 </style>

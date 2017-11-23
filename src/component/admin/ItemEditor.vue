@@ -1,7 +1,8 @@
 <template>
     <div>
-        <img :src="displayedImgSrc"/>
-        <input type="file" @change="fileHandler" accept="image/*"/>
+        <img :src="displayedImgSrc"/><br/>
+        <label for="image">图片</label>
+        <input type="file" @change="fileHandler" accept="image/*" id="image"/>
         <br/>
         <label for="name">名称</label>
         <input name="name" v-model="name" id="name"/>
@@ -104,7 +105,6 @@
 //                                )
                                 .then(
                                     item => {
-                                        commit('createItem', item)
                                         commit('createNoticeModal', '创建成功')
                                         this.$router.push({name: 'itemAdmin'})
                                     },
@@ -166,6 +166,7 @@
         display: inline-block;
         padding: .5em 1em;
         border: 1px solid hsl(120, 50%, 50%);
+        margin-top: .3em;
     }
 
     img {

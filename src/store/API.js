@@ -19,7 +19,9 @@ export default {
     createOrder:match(API_ADDRESS+'order'),
 
     uploadImg:match(API_ADDRESS+'all/util/uploadPicture'),
-    downloadData:API_ADDRESS+'all/util/downloadData'
+    downloadData:API_ADDRESS+'all/util/downloadData',
+    getDocumentTitle:API_ADDRESS+'all/util/documentTitle',
+    updateDocumentTitle:API_ADDRESS+'all/util/documentTitle',
 }
 
 

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="content-wrapper">
         <h1>Detail  {{itemId | toNumber}}</h1>
         <item-editor :itemId="Number(itemId)"></item-editor>
     </div>
@@ -24,3 +24,9 @@
         }
     }
 </script>
+<style>
+    .content-wrapper{
+        font-size: 1.5rem;
+        line-height: 2;
+    }
+</style>

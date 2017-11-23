@@ -1,7 +1,7 @@
 <template>
     <div class="app" @clickmodal="test">
         <header>
-            <img :src="logoSrc">
+            {{documentTitle}}
         </header>
         <nav>
             <ul class="nav-bar">
@@ -21,9 +21,9 @@
         </nav>
         <section class="cart-info" v-if="$route.name!=='itemAdmin'&&$route.name!=='detailItemAdmin'">
             <router-link :to="{name:'cart'}">
-            <s-button class="cart-btn">
+                <s-button class="cart-btn">
                     <span>我的购物车</span><i class="cart-icon"><span class="cart-num">{{cartNum}}</span></i>
-            </s-button>
+                </s-button>
             </router-link>
         </section>
         <section class="main-wrapper">
@@ -45,6 +45,9 @@
         created() {
 //            向store请求更新 购物车数量 商品列表
             store.dispatch('checkoutCart')
+
+//            请求获取文档标题
+            store.dispatch('checkoutDocumentTitle')
         },
         data() {
             return {
@@ -60,9 +63,14 @@
             cartNum: () => store.state.cart.total,
             showNoticeModal: () => state.globalNoticeModal.show,
             noticeModalMessage: () => state.globalNoticeModal.message,
-            isLogin: () => state.isLogin
+            isLogin: () => state.isLogin,
+            documentTitle: () => store.state.documentTitle
         },
-        watch: {},
+        watch: {
+            documentTitle(value) {
+                document.title = value
+            }
+        },
         components: {
             SButton,
             Login,
@@ -76,7 +84,11 @@
             logout() {
                 store.dispatch('logout')
                     .then(() => {
-                        this.$router.push({name: 'item'})
+                        if (this.$router.currentRoute.name === 'item') {
+                            this.$router.go(0)
+                        } else {
+                            this.$router.push({name: 'item'})
+                        }
                     })
             }
         }
@@ -85,19 +97,30 @@
 <style scoped>
     header {
         background-color: rgb(48, 48, 48);
+
+
+        padding-bottom: .2em;
+        font-size: 3rem;
+        font-family: "黑体";
+        font-weight: 900;
+        color: white;
+        font-style: italic;
+        padding-top: .2em;
     }
 
     @media screen {
         header, .main-wrapper, nav, .cart-info {
             width: 940px;
-            padding: 0 20px;
+            padding-left: 20px;
+            padding-right: 20px;
         }
     }
 
     @media screen and (min-width: 980px) {
         header, .main-wrapper, nav, .cart-info {
             width: 940px;
-            padding: 0 calc(50% - 470px);
+            padding-left: calc(50% - 470px);
+            padding-right: calc(50% - 470px);
         }
     }
 

@@ -9,6 +9,9 @@ const store = new Vuex.Store({
         isLogin: false,
         username: '',
 
+        // 文档标题
+        documentTitle:'',
+
         // 存放某页的商品
         item: {
             total: 0,
@@ -65,7 +68,13 @@ const store = new Vuex.Store({
         checkoutCart({commit}) {
             resources.getCartList()
                 .then(response => {
-                    commit('modifyCart', {list: response})
+                    commit('modifyCart', {
+                        list: response.map(item=>{
+                            if (item.imgSrc) item.imgSrc = 'http://120.24.70.191:8080/SimpleShoppingWebsite'+item.imgSrc
+                            return item
+                        }
+                        )
+                    })
                 })
         },
         // 服务器获取分页的商品
@@ -189,6 +198,16 @@ const store = new Vuex.Store({
                     },
                     e => {
                         throw e
+                    }
+                )
+        },
+
+        // 更新文档标题
+        checkoutDocumentTitle({state},documentTitle){
+            resources.getDocumentTitle(documentTitle)
+                .then(
+                    (documentTitle)=>{
+                        state.documentTitle =documentTitle
                     }
                 )
         }

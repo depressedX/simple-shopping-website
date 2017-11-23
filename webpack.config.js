@@ -73,11 +73,21 @@ module.exports = {
             API_ROOT_PATH: JSON.stringify(consts.API_ROOT_PATH),
             ROOT_ROUTE: JSON.stringify(consts.ROOT_ROUTE),
             MODE:JSON.stringify(consts.MODE),
-            // 'process.env': {
-            //     NODE_ENV: '"production"'
-            // }
+            'process.env': {
+                NODE_ENV: '"production"'
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
         })
     ],
+    externals: {
+        vue: 'Vue',
+        ['vue-router']:'VueRouter',
+        vuex:'Vuex'
+    },
     resolve: {
         alias: {
             'vue$': 'vue/dist/vue.esm.js' // 'vue/dist/vue.common.js' for webpack 1
