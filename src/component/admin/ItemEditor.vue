@@ -44,6 +44,12 @@
         },
         created() {
             if (!this.isNewItem) {
+                resources.getItem(this.itemId)
+                    .then(
+                        (item)=>{
+                            this.imgSrc = item.imgSrc
+                        }
+                    )
                 store.dispatch('getSingleItem', this.itemId)
                     .then(
                         (item) => {
@@ -75,21 +81,22 @@
             // 创建商品
             submit() {
                 let uploadImg = new Promise((resolve, reject) => {
-                    if (this.needUploadImg) {
-                        resources.uploadImg(this.img)
-                            .then(
-                                imgSrc => {
-                                    console.log('img resoved',imgSrc)
-                                    resolve(imgSrc)
-                                },
-                                error => {
-                                    reject(error)
-                                }
-                            )
-                    } else {
-                        resolve(null)
-                    }
-
+                        if (this.needUploadImg) {
+//                            通过input输入的图片
+                            resources.uploadImg(this.img)
+                                .then(
+                                    imgSrc => {
+                                        console.log('img resoved', imgSrc)
+                                        resolve(imgSrc)
+                                    },
+                                    error => {
+                                        reject(error)
+                                    }
+                                )
+                        } else {
+//                            resolve(null)
+                            resolve(this.imgSrc)
+                        }
                 })
                 uploadImg.then(
                     (imgSrc) => {
@@ -116,8 +123,8 @@
                             resources.updateItem(this.itemId, bundle)
                                 .then(
                                     () => {
-                                        store.dispatch('checkoutItem')
                                         commit('createNoticeModal', '修改成功')
+                                        this.$router.push({name: 'itemAdmin'})
                                     },
                                     error => {
                                         commit('createNoticeModal', error.message)

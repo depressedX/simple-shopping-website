@@ -20,8 +20,12 @@ const env={
 const consts = env.dev
 
 module.exports = {
-    devtool: 'eval-source-map',
-    entry: './src/main.js',
+    // devtool: 'eval-source-map',
+    devtool:false,
+    entry: {
+        main:'./src/main.js',
+        // vendor:['vue','vuex','vue-router']
+    },
     output: {
         path: __dirname + '/public',
         filename: '[name].js',
@@ -81,7 +85,10 @@ module.exports = {
             compress: {
                 warnings: false
             }
-        })
+        }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     names:['vendor']
+        // })
     ],
     externals: {
         vue: 'Vue',

@@ -10,7 +10,7 @@ const deliverResponse = response => {
         throw new ClientError(response.data)
     }
 }
-const throwError = error=>{
+const throwError = error => {
     throw  error
 }
 
@@ -21,8 +21,13 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 
-const decorateItem = item=>{
-    item.price = item.price/100
+const decodePrice = item => {
+    item.price = item.price / 100
+    console.log(item)
+    return item
+}
+const encodePrice = item => {
+    item.price = item.price * 100
     return item
 }
 
@@ -35,7 +40,7 @@ const request = {
         return axios.get(API.getItemList, {params: {page, rows}})
             .then(deliverResponse)
             .then(
-                itemList=>itemList.map(decorateItem),
+                itemList => itemList.map(decodePrice),
                 throwError
             )
     },
@@ -43,7 +48,7 @@ const request = {
         return axios.get(API.getItem(id))
             .then(deliverResponse)
             .then(
-                decorateItem,
+                decodePrice,
                 throwError
             )
     },
@@ -51,16 +56,21 @@ const request = {
         /**
          * 预处理一下 价格*100
          */
-        bundle.price = parseInt(bundle.price*100)
+        // bundle.price = parseInt(bundle.price * 100)
+        bundle = encodePrice(bundle)
 
-        return axios.post(API.createItem, bundle,{
+        return axios.post(API.createItem, bundle, {
             // headers: {'Content-Type': 'multipart/form-data'},
         })
             .then(deliverResponse)
     },
     updateItem(id, bundle) {
+        /**
+         * 预处理一下 价格*100
+         */
+        bundle = encodePrice(bundle)
         return axios.post(API.updateItem(id), bundle)
-            .then(deliverResponse,throwError)
+            .then(deliverResponse, throwError)
     },
     deleteItem(id) {
         return axios.post(API.deleteItem(id))
@@ -86,10 +96,11 @@ const request = {
     },
     getCartList() {
         return axios.get(API.getCartList)
-            .then(deliverResponse,throwError)
+            .then(deliverResponse, throwError)
+            .then(cartList=>cartList.map(decodePrice),throwError)
     },
     createCart(bundle) {
-        return axios.post(API.createCart, bundle,{
+        return axios.post(API.createCart, bundle, {
             // headers: {'Content-Type': 'x-www-form-urlencoded'},
         })
             .then(deliverResponse)
@@ -117,20 +128,28 @@ const request = {
             .then(deliverResponse)
     },
 
-    downloadData(){
+    downloadData() {
         let hrefDom = document.createElement('a')
         hrefDom.href = API.downloadData
         hrefDom.click()
     },
 
-    getDocumentTitle(){
+    getDocumentTitle() {
         return axios.get(API.getDocumentTitle)
-            .then(deliverResponse,throwError)
+            .then(deliverResponse, throwError)
     },
-    updateDocumentTitle(documentTitle){
-        return axios.post(API.updateDocumentTitle,{documentTitle})
-            .then(deliverResponse,throwError)
+    updateDocumentTitle(documentTitle) {
+        return axios.post(API.updateDocumentTitle, {documentTitle})
+            .then(deliverResponse, throwError)
     },
+    updateMaxCartNum(maxCartNum) {
+        return axios.post(API.updateMaxCartNum, {maxCartNum})
+            .then(deliverResponse, throwError)
+    },
+    updateMessage401(message401){
+        return axios.post(API.updateMessage401,{message401})
+            .then(deliverResponse,throwError)
+    }
 }
 
 

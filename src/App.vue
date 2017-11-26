@@ -7,7 +7,7 @@
             <ul class="nav-bar">
                 <li class="nav-item">
                     <router-link :to="{name:'item'}">首页</router-link>
-                    <router-link :to="{name:'itemAdmin'}">管理</router-link>
+                    <!--<router-link :to="{name:'itemAdmin'}">管理</router-link>-->
                     <a
                             href="javascript:void (0)"
                             @click="showLoginModal=!showLoginModal"

@@ -2,8 +2,17 @@
     <div class="content-wrapper">
         <h1>管理商品</h1>
         <span>下载数据 : </span><a href="javascript:void (0)" @click="downloadData" style="text-decoration: underline">点此下载文件</a><br/>
-        <span>修改标题 : </span><input v-model="documentTitle"/><s-button @click="updateDocumentTitle">保存</s-button><br/>
-        <span>增删物品 : </span><router-link :to="{name:'detailItemAdmin',params:{itemId:'-1'}}" class="create-item-btn" >添加物品</router-link>
+        <span>修改标题 : </span><input v-model="documentTitle"/>
+        <s-button @click="updateDocumentTitle">保存</s-button>
+        <br/>
+        <span>修改购物车上限 : </span><input v-model="maxCartNum"/>
+        <s-button @click="updateMaxCartNum">提交</s-button>
+        <br/>
+        <span>修改上限提示 : </span><input v-model="message401"/>
+        <s-button @click="updateMessage401">提交</s-button>
+        <br/>
+        <span>增删物品 : </span>
+        <router-link :to="{name:'detailItemAdmin',params:{itemId:'-1'}}" class="create-item-btn">添加物品</router-link>
         <item
                 :name="item.name"
                 :price="item.price"
@@ -27,9 +36,11 @@
             Item,
             SButton
         },
-        data(){
+        data() {
             return {
-                documentTitle:''
+                documentTitle: '',
+                maxCartNum: 1,
+                message401: ''
             }
         },
         computed: {
@@ -38,19 +49,39 @@
         created() {
             store.dispatch('checkoutItem')
         },
-        methods:{
-            downloadData(){
+        methods: {
+            downloadData() {
                 resources.downloadData()
             },
-            updateDocumentTitle(){
+            updateDocumentTitle() {
                 let documentTitle = this.documentTitle
                 resources.updateDocumentTitle(documentTitle).then(
-                    ()=>{
-                        commit('createNoticeModal','修改成功')
+                    () => {
+                        commit('createNoticeModal', '修改成功')
                         store.dispatch('checkoutDocumentTitle')
                     },
-                    (error)=>{
-                        commit('createNoticeModal',error.message)
+                    (error) => {
+                        commit('createNoticeModal', error.message)
+                    }
+                )
+            },
+            updateMaxCartNum() {
+                resources.updateMaxCartNum(this.maxCartNum).then(
+                    ()=>{
+                        commit('createNoticeModal', '修改成功')
+                    },
+                    (error) => {
+                        commit('createNoticeModal', error.message)
+                    }
+                )
+            },
+            updateMessage401(){
+                resources.updateMessage401(this.message401).then(
+                    ()=>{
+                        commit('createNoticeModal', '修改成功')
+                    },
+                    (error) => {
+                        commit('createNoticeModal', error.message)
                     }
                 )
             }
@@ -67,16 +98,19 @@
         background-color: #eee;
         cursor: pointer;
     }
-    .create-item-btn{
+
+    .create-item-btn {
         display: inline-block;
         padding: .5em 1em;
-        border: 1px solid hsl(200,50%,50%);
+        border: 1px solid hsl(200, 50%, 50%);
         border-radius: 5px;
     }
-    .create-item-btn:hover{
+
+    .create-item-btn:hover {
         background-color: #eee;
     }
-    .content-wrapper{
+
+    .content-wrapper {
         font-size: 1.5rem;
         line-height: 2;
     }

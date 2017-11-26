@@ -22,6 +22,8 @@ export default {
     downloadData:API_ADDRESS+'all/util/downloadData',
     getDocumentTitle:API_ADDRESS+'all/util/documentTitle',
     updateDocumentTitle:API_ADDRESS+'all/util/documentTitle',
+    updateMaxCartNum:API_ADDRESS+'all/util/maxCartNum',
+    updateMessage401:API_ADDRESS+'all/util/message401'
 }
 
 

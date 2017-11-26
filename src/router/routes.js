@@ -27,12 +27,12 @@ const routes = [
                 }
             },
             {
-                path:'admin/item',
+                path:'admin',
                 name:'itemAdmin',
                 component:ItemAdmin
             },
             {
-                path:'admin/item/:itemId',
+                path:'admin/:itemId',
                 name:'detailItemAdmin',
                 component:DetailItemAdmin,
                 props:true
