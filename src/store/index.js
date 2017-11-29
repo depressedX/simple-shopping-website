@@ -10,7 +10,7 @@ const store = new Vuex.Store({
         username: '',
 
         // 文档标题
-        documentTitle:'',
+        documentTitle: '',
 
         // 存放某页的商品
         item: {
@@ -38,8 +38,8 @@ const store = new Vuex.Store({
         },
         // 创建新的物品
         createItem(state, payload) {
-            if (payload.imgSrc){
-                payload.imgSrc = 'http://120.24.70.191:8080/SimpleShoppingWebsite'+payload.imgSrc
+            if (payload.imgSrc) {
+                payload.imgSrc = 'http://120.24.70.191:8080/SimpleShoppingWebsite' + payload.imgSrc
 
             }
             state.item.list.push(payload)
@@ -69,10 +69,10 @@ const store = new Vuex.Store({
             resources.getCartList()
                 .then(response => {
                     commit('modifyCart', {
-                        list: response.map(item=>{
-                            if (item.imgSrc) item.imgSrc = 'http://120.24.70.191:8080/SimpleShoppingWebsite'+item.imgSrc
-                            return item
-                        }
+                        list: response.map(item => {
+                                if (item.imgSrc) item.imgSrc = 'http://120.24.70.191:8080/SimpleShoppingWebsite' + item.imgSrc
+                                return item
+                            }
                         )
                     })
                 })
@@ -88,19 +88,22 @@ const store = new Vuex.Store({
             }
             resources.getItemList(curPage, numPerPage)
                 .then(response => {
-                    commit('modifyItem', {
-                        curPage,
-                        numPerPage,
-                        // list: response
-                        list:response.map(item=>{
-                            if (item.imgSrc) item.imgSrc = 'http://120.24.70.191:8080/SimpleShoppingWebsite'+item.imgSrc
-                            return item
-                        })
-                    }),
-                        error => {
-                            console.log(error)
-                        }
-                })
+                        commit('modifyItem', {
+                            curPage,
+                            numPerPage,
+                            // list: response
+                            list: response.map(item => {
+                                if (item.imgSrc) item.imgSrc = 'http://120.24.70.191:8080/SimpleShoppingWebsite' + item.imgSrc
+                                return item
+                            })
+                        }),
+                            error => {
+                                console.log(error)
+                            }
+                    },
+                    error => {
+                        console.log('error occured  ', error)
+                    })
         },
         // 更新物品数量
         checkoutItemNum({commit}) {
@@ -164,13 +167,13 @@ const store = new Vuex.Store({
         getSingleItem(context, itemId) {
             return resources.getItem(itemId)
                 .then(
-                    item=>{
+                    item => {
                         if (item.imgSrc) {
                             item.imgSrc = 'http://120.24.70.191:8080/SimpleShoppingWebsite' + item.imgSrc
                         }
                         return item
                     },
-                    error=>{
+                    error => {
                         throw error
                     }
                 )
@@ -203,11 +206,11 @@ const store = new Vuex.Store({
         },
 
         // 更新文档标题
-        checkoutDocumentTitle({state},documentTitle){
+        checkoutDocumentTitle({state}, documentTitle) {
             resources.getDocumentTitle(documentTitle)
                 .then(
-                    (documentTitle)=>{
-                        state.documentTitle =documentTitle
+                    (documentTitle) => {
+                        state.documentTitle = documentTitle
                     }
                 )
         }

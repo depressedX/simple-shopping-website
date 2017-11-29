@@ -58,6 +58,7 @@
     export default {
         created() {
             console.log('cart created');
+            dispatch('checkoutCart')
         },
         components: {
             Checkbox,

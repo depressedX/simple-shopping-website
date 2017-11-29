@@ -39,8 +39,9 @@
         },
         methods: {
             submit() {
-                this.form.reportValidity();
-                if (this.form.checkValidity()) {
+//                因为兼容性暂时去掉
+//                this.form.reportValidity();
+//                if (this.form.checkValidity()) {
                     this.$refs.submit.preventClickEvent()
                     store.dispatch('login', {username: this.username})
                         .then(
@@ -56,7 +57,7 @@
                                 store.commit('createNoticeModal',e.message)
                             }
                         )
-                }
+//                }
             }
         },
     }

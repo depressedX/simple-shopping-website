@@ -40,7 +40,16 @@ module.exports = {
     },
     module: {
         rules: [
-            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
+            {
+                test: /\.js$/,
+                use: [{
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['es2015']
+                    }
+                }],
+                exclude: /node_modules/
+            },
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']
@@ -93,7 +102,7 @@ module.exports = {
     externals: {
         vue: 'Vue',
         ['vue-router']:'VueRouter',
-        vuex:'Vuex'
+        // vuex:'Vuex'
     },
     resolve: {
         alias: {

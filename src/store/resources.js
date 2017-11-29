@@ -15,6 +15,9 @@ const throwError = error => {
 }
 
 axios.interceptors.request.use(function (config) {
+    // 禁止缓存
+    config.params = config.params||{}
+    config.params.noCache = new Date().getTime()
     return config
 }, function (error) {
     // Do something with request error
