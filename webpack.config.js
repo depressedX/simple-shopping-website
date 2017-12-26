@@ -102,7 +102,7 @@ module.exports = {
     externals: {
         vue: 'Vue',
         ['vue-router']:'VueRouter',
-        // vuex:'Vuex'
+        vuex:'Vuex'
     },
     resolve: {
         alias: {

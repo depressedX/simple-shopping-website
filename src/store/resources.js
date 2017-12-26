@@ -26,13 +26,14 @@ axios.interceptors.request.use(function (config) {
 
 const decodePrice = item => {
     item.price = item.price / 100
-    console.log(item)
     return item
 }
 const encodePrice = item => {
     item.price = item.price * 100
     return item
 }
+const decodePreference = preference => preference / 100
+const encodePreference = preference => preference * 100
 
 const request = {
     getItemNum() {
@@ -151,6 +152,15 @@ const request = {
     },
     updateMessage401(message401){
         return axios.post(API.updateMessage401,{message401})
+            .then(deliverResponse,throwError)
+    },
+    getPreference(){
+        return axios.get(API.getPreference)
+            .then(deliverResponse,throwError)
+            .then(decodePreference,throwError)
+    },
+    updatePreference(value){
+        return axios.post(API.updatePreference,{preference:encodePreference(value)})
             .then(deliverResponse,throwError)
     }
 }

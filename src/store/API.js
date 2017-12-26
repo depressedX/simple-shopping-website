@@ -23,7 +23,9 @@ export default {
     getDocumentTitle:API_ADDRESS+'all/util/documentTitle',
     updateDocumentTitle:API_ADDRESS+'all/util/documentTitle',
     updateMaxCartNum:API_ADDRESS+'all/util/maxCartNum',
-    updateMessage401:API_ADDRESS+'all/util/message401'
+    updateMessage401:API_ADDRESS+'all/util/message401',
+    getPreference:API_ADDRESS+'all/util/preference',
+    updatePreference:API_ADDRESS+'all/util/preference'
 }
 
 

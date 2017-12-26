@@ -24,6 +24,8 @@ const store = new Vuex.Store({
             total: 0,
             list: []
         },
+        // 优惠金额
+        preference:0,
 
 
         globalNoticeModal: {
@@ -213,6 +215,18 @@ const store = new Vuex.Store({
                         state.documentTitle = documentTitle
                     }
                 )
+        },
+
+        // 获取优惠金额
+        checkoutPreference({state}){
+            resources.getPreference().then(
+                preference=>{
+                    state.preference = preference
+                },
+                error=>{
+                    console.log(error)
+                }
+            )
         }
     }
 
